@@ -8,5 +8,5 @@ bookdown::gitbook:
       before: |
         <li><a href="./">IOBRpy FASTQ-to-TME Tutorial</a></li>
       after: |
-        <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
+        <li><a href="https://github.com/IOBR/IOBRpy" target="blank">Welcome to IOBRpy</a></li>
     download: false
