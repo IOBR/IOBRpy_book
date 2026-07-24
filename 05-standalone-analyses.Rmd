@@ -2,6 +2,8 @@
 
 ## BayesPrism
 
+BayesPrism performs immune deconvolution of bulk expression profiles using a single-cell reference.
+
 ```bash
 iobrpy bayesprism \
   --input results/PRJNA482620/03-tpm/tpm_matrix.csv \
@@ -19,6 +21,8 @@ results/PRJNA482620/08-bayesprism/
 ```
 
 ## TME clustering
+
+TME clustering groups samples according to their tumor microenvironment profiles.
 
 ```bash
 mkdir -p results/PRJNA482620/09-tme-cluster

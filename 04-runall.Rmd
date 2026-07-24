@@ -2,8 +2,6 @@
 
 ## Run `runall`
 
-Use [PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620) as the project identifier:
-
 ```bash
 iobrpy runall \
   --fastq data/fastq \
@@ -50,6 +48,10 @@ results/PRJNA482620/
 │   └── deconvo_merged.csv
 ├── 06-LR_cal/lr_cal.csv
 └── 07-TCRBCR/
+    ├── <sample>/<sample>_report.tsv
+    ├── trust4_immdata.csv
+    ├── trust4_immune_indices.csv
+    └── .trust4.done
 ```
 
 The standalone analyses chapter reuses three outputs:
