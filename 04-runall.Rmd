@@ -50,8 +50,7 @@ results/PRJDB16684/
 └── 07-TCRBCR/
     ├── <sample>/<sample>_report.tsv
     ├── trust4_immdata.csv
-    ├── trust4_immune_indices.csv
-    └── .trust4.done
+    └── trust4_immune_indices.csv
 ```
 
 The standalone analyses chapter reuses three outputs:
