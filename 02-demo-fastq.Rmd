@@ -7,36 +7,44 @@ Download the complete paired-end FASTQ files from ENA:
 ```bash
 mkdir -p data/fastq
 
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/008/SRR8281218/SRR8281218_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/008/SRR8281218/SRR8281218_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/006/SRR8281226/SRR8281226_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/006/SRR8281226/SRR8281226_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/005/SRR8281245/SRR8281245_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/005/SRR8281245/SRR8281245_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243/SRR8281243_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243/SRR8281243_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503996/DRR503996_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503996/DRR503996_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503997/DRR503997_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503997/DRR503997_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503998/DRR503998_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503998/DRR503998_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503999/DRR503999_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503999/DRR503999_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504000/DRR504000_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504000/DRR504000_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504001/DRR504001_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504001/DRR504001_2.fastq.gz -P data/fastq
 ```
 
 The output directory contains:
 
 ```text
 data/fastq/
-├── SRR8281218_1.fastq.gz
-├── SRR8281218_2.fastq.gz
-├── SRR8281226_1.fastq.gz
-├── SRR8281226_2.fastq.gz
-├── SRR8281243_1.fastq.gz
-├── SRR8281243_2.fastq.gz
-├── SRR8281245_1.fastq.gz
-└── SRR8281245_2.fastq.gz
+├── DRR503996_1.fastq.gz
+├── DRR503996_2.fastq.gz
+├── DRR503997_1.fastq.gz
+├── DRR503997_2.fastq.gz
+├── DRR503998_1.fastq.gz
+├── DRR503998_2.fastq.gz
+├── DRR503999_1.fastq.gz
+├── DRR503999_2.fastq.gz
+├── DRR504000_1.fastq.gz
+├── DRR504000_2.fastq.gz
+├── DRR504001_1.fastq.gz
+└── DRR504001_2.fastq.gz
 ```
 
 ## Check the FASTQ files
 
 ```bash
-test "$(find data/fastq -maxdepth 1 -name '*.fastq.gz' | wc -l)" -eq 8
+test "$(find data/fastq -maxdepth 1 -name '*.fastq.gz' | wc -l)" -eq 12
 gzip -t data/fastq/*.fastq.gz
-echo "All eight FASTQ files passed the gzip integrity check."
+echo "All twelve FASTQ files passed the gzip integrity check."
 ```
 
-Data source: [NCBI BioProject PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620).
+Data source: [ENA study PRJDB16684](https://www.ebi.ac.uk/ena/browser/view/PRJDB16684).

@@ -5,12 +5,12 @@
 ```bash
 iobrpy runall \
   --fastq data/fastq \
-  --outdir results/PRJNA482620 \
+  --outdir results/PRJDB16684 \
   --mode star \
   --index /path/to/index/dir/star \
   --threads 4 \
   --batch_size 1 \
-  --project PRJNA482620
+  --project PRJDB16684
 ```
 
 ## What is already included
@@ -28,12 +28,12 @@ Do not rerun these components in separate chapters. STAR `runall` already perfor
 ## Output contract
 
 ```text
-results/PRJNA482620/
+results/PRJDB16684/
 ├── 01-qc/
 ├── 02-star/
 │   ├── <sample>_Aligned.sortedByCoord.out.bam
 │   ├── <sample>_ReadsPerGene.out.tab
-│   └── PRJNA482620.STAR.count.tsv.gz
+│   └── PRJDB16684.STAR.count.tsv.gz
 ├── 03-tpm/
 │   ├── count2tpm.csv
 │   └── tpm_matrix.csv
