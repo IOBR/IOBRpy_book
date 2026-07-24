@@ -7,30 +7,14 @@ Download the complete paired-end FASTQ files from ENA:
 ```bash
 mkdir -p data/fastq
 
-while read -r run base; do
-  for mate in 1 2; do
-    wget -c "${base}/${run}_${mate}.fastq.gz" -P data/fastq
-  done
-done <<'EOF'
-SRR8281218 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/008/SRR8281218
-SRR8281226 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/006/SRR8281226
-SRR8281245 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/005/SRR8281245
-SRR8281243 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243
-EOF
-```
-
-The output directory contains eight files:
-
-```text
-data/fastq/
-├── SRR8281218_1.fastq.gz
-├── SRR8281218_2.fastq.gz
-├── SRR8281226_1.fastq.gz
-├── SRR8281226_2.fastq.gz
-├── SRR8281243_1.fastq.gz
-├── SRR8281243_2.fastq.gz
-├── SRR8281245_1.fastq.gz
-└── SRR8281245_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/008/SRR8281218/SRR8281218_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/008/SRR8281218/SRR8281218_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/006/SRR8281226/SRR8281226_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/006/SRR8281226/SRR8281226_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/005/SRR8281245/SRR8281245_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/005/SRR8281245/SRR8281245_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243/SRR8281243_1.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243/SRR8281243_2.fastq.gz -P data/fastq
 ```
 
 ## Check the FASTQ files
@@ -41,4 +25,4 @@ gzip -t data/fastq/*.fastq.gz
 echo "All eight FASTQ files passed the gzip integrity check."
 ```
 
-Data source: [NCBI BioProject PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620), runs [SRR8281218](https://www.ncbi.nlm.nih.gov/sra/SRR8281218), [SRR8281226](https://www.ncbi.nlm.nih.gov/sra/SRR8281226), [SRR8281245](https://www.ncbi.nlm.nih.gov/sra/SRR8281245), and [SRR8281243](https://www.ncbi.nlm.nih.gov/sra/SRR8281243).
+Data source: [NCBI BioProject PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620).

@@ -1,60 +1,54 @@
 # Build the STAR genome index
 
-## Match the index to the workflow mode
+## Prerequisites
 
-For `runall --mode star`, `--index` must point to a STAR `genomeDir`. Do not supply a Salmon index, FASTA file, or GTF file directly to `runall`.
-
-This tutorial uses matching files from GENCODE human release 36:
-
-- [GRCh38 primary assembly genome FASTA](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/GRCh38.primary_assembly.genome.fa.gz)
-- [GENCODE v36 annotation GTF](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/gencode.v36.annotation.gtf.gz)
-
-## Build the index
+Activate the IOBRpy environment:
 
 ```bash
-mkdir -p reference/gencode-v36 reference/star-gencode-v36
-
-wget -c \
-  https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/GRCh38.primary_assembly.genome.fa.gz \
-  -O reference/gencode-v36/GRCh38.primary_assembly.genome.fa.gz
-wget -c \
-  https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/gencode.v36.annotation.gtf.gz \
-  -O reference/gencode-v36/gencode.v36.annotation.gtf.gz
-
-gzip -dk reference/gencode-v36/GRCh38.primary_assembly.genome.fa.gz
-gzip -dk reference/gencode-v36/gencode.v36.annotation.gtf.gz
-
-STAR \
-  --runMode genomeGenerate \
-  --runThreadN 4 \
-  --genomeDir reference/star-gencode-v36 \
-  --genomeFastaFiles reference/gencode-v36/GRCh38.primary_assembly.genome.fa \
-  --sjdbGTFfile reference/gencode-v36/gencode.v36.annotation.gtf \
-  --sjdbOverhang 100
+conda activate iobrpy
 ```
 
-This creates:
-
-```text
-reference/
-├── gencode-v36/
-│   ├── GRCh38.primary_assembly.genome.fa
-│   └── gencode.v36.annotation.gtf
-└── star-gencode-v36/
-    ├── Genome
-    ├── SA
-    ├── SAindex
-    └── genomeParameters.txt
-```
-
-`--sjdbOverhang 100` matches 101-base reads. For another read length, set this value to read length minus one.
-
-## Check the index
+Choose a base directory for the index:
 
 ```bash
-test -s reference/star-gencode-v36/Genome
-test -s reference/star-gencode-v36/genomeParameters.txt
-STAR --version | tee reference/star-version.txt
+export BASE=/path/to/index/dir
+mkdir -p "$BASE"
 ```
 
-The index uses a complete human genome because downstream immune and ligand-receptor analyses require broad gene coverage. A small artificial genome would be fast but would invalidate most of the teaching workflow.
+## Build STAR index
+
+```bash
+# Move to the base directory for references
+cd "$BASE"
+
+# Download the primary assembly and GTF (GENCODE v44)
+wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/GRCh38.primary_assembly.genome.fa.gz
+wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.annotation.gtf.gz
+
+# Decompress the downloads
+gunzip -f GRCh38.primary_assembly.genome.fa.gz
+gunzip -f gencode.v44.annotation.gtf.gz
+
+# Paths
+STAR_INDEX="$BASE/star"
+genome_fa="$BASE/GRCh38.primary_assembly.genome.fa"
+gtf="$BASE/gencode.v44.annotation.gtf"
+
+# Create output directory for STAR index
+mkdir -p "$STAR_INDEX"
+
+# Build STAR genome index
+STAR --runMode genomeGenerate \
+     --genomeDir "$STAR_INDEX" \
+     --genomeFastaFiles "$genome_fa" \
+     --sjdbGTFfile "$gtf" \
+     --runThreadN 16 \
+     --sjdbOverhang 100
+```
+
+## Notes
+
+- **Release/assembly:** This guide uses **GENCODE v44** (GRCh38). If you need a different release or assembly, update the URLs and filenames accordingly.
+- **Threads:** Increase `--runThreadN` to speed up indexing if you have more cores.
+- **Storage:** STAR indexes are large (tens of GB). Ensure you have enough disk space.
+- **Read length:** Set `--sjdbOverhang = read_length - 1` for best splice junction annotations.

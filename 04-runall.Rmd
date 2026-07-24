@@ -7,7 +7,7 @@ iobrpy runall \
   --fastq data/fastq \
   --outdir results/gbm-demo \
   --mode star \
-  --index reference/star-gencode-v36 \
+  --index /path/to/index/dir/star \
   --threads 2 \
   --batch_size 1 \
   --project GBM_demo
