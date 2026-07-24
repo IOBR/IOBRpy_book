@@ -1,0 +1,58 @@
+# BayesPrism deconvolution
+
+BayesPrism is a standalone IOBRpy command. It is not part of the six-method TME bundle executed by `runall`.
+
+## Inspect the command
+
+```bash
+iobrpy-cli bayesprism --help
+```
+
+The input matrix must be genes by samples. Use the non-log matrix from STAR `runall`, not `03-tpm/tpm_matrix.csv`:
+
+```bash
+head results/gbm-demo/03-tpm/count2tpm.csv
+```
+
+## Run with the bundled reference
+
+Choose the thread count after checking the host:
+
+```bash
+iobrpy-cli bayesprism \
+  --input results/gbm-demo/03-tpm/count2tpm.csv \
+  --output results/gbm-demo/08-bayesprism \
+  --threads 2
+```
+
+The output directory contains:
+
+```text
+08-bayesprism/
+├── theta.csv
+├── theta_cv.csv
+└── Z_tumor.csv
+```
+
+- `theta.csv` contains the final cell-type fractions.
+- `theta_cv.csv` contains posterior coefficient-of-variation values.
+- `Z_tumor.csv` contains the inferred expression profile for the malignant-cell component.
+
+The current implementation converts the input values to integers internally. The command above is a compact software tutorial using the non-log matrix produced by `runall`; it is not a validated reference-analysis design for this four-sample subset.
+
+## Use a custom single-cell reference
+
+A custom reference requires a cell-by-gene count matrix, one cell-state label per cell, one cell-type label per cell, and a malignant cell-type key:
+
+```bash
+iobrpy-cli bayesprism \
+  --input bulk_expression.csv \
+  --output bayesprism-custom \
+  --threads 4 \
+  --sc_dat single_cell_counts.csv \
+  --cell_state_labels cell_state_labels.csv \
+  --cell_type_labels cell_type_labels.csv \
+  --key Malignant_cells
+```
+
+Reference genes, bulk genes, label order, and the tumor key must agree. Validate those inputs before interpreting the fractions.

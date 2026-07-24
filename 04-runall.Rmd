@@ -1,92 +1,73 @@
-# Run FASTQ-to-TME with one command
+# Run the STAR workflow
 
-## Identify the input before choosing a workflow
-
-Start by scanning the input path:
+## Inspect the input
 
 ```bash
 iobrpy-cli map --path data/fastq --json
 ```
 
-For the tutorial directory, the scan should identify at least:
-
-- paired-end FASTQ files;
-- four samples;
-- no existing QC, quantification, or downstream outputs.
-
-Then request a native workflow recommendation:
+The scan should identify four paired-end FASTQ samples and no existing workflow outputs. Then request a command recommendation:
 
 ```bash
 iobrpy-cli recommend \
   --path data/fastq \
-  --task "Run the teaching FASTQ dataset through Salmon and the full IOBRpy workflow" \
+  --task "Run the teaching FASTQ dataset with STAR and the full IOBRpy workflow" \
   --json
 ```
 
-The returned `confirm_parameters` should agree with the choices in this tutorial:
+Confirm that the recommendation uses:
 
-- `mode = salmon`;
-- `index = reference/salmon-gencode-v36`;
-- `threads` selected after checking the current host;
+- `mode = star`;
+- `index = reference/star-gencode-v36`;
+- a resource-checked thread count;
 - `batch_size = 1`;
 - `project = GBM_demo`.
 
-## Run the workflow
-
-After setting `THREADS` and `BATCH_SIZE`:
+## Run `runall`
 
 ```bash
 THREADS=2 BATCH_SIZE=1 bash scripts/run_demo.sh
 ```
 
-The script ultimately runs:
+The script runs the validated native command:
 
 ```bash
 iobrpy-cli runall \
   --fastq data/fastq \
   --outdir results/gbm-demo \
-  --mode salmon \
-  --index reference/salmon-gencode-v36 \
+  --mode star \
+  --index reference/star-gencode-v36 \
   --threads "${THREADS}" \
   --batch_size "${BATCH_SIZE}" \
   --project GBM_demo
 ```
 
-The run log is written to:
+The log is saved as `logs/runall.log`.
 
-```text
-logs/runall.log
-```
+## What is already included
 
-## What `runall` does
+Do not rerun these components in separate chapters. STAR `runall` already performs:
 
-Salmon mode executes these steps in order:
+1. fastp quality control;
+2. STAR alignment and gene counting;
+3. merged counts, count-to-TPM conversion, and the standard log-transformed matrix;
+4. signature scoring;
+5. CIBERSORT, IPS, ESTIMATE, MCPcounter, quanTIseq, and EPIC;
+6. merged TME results;
+7. ligand-receptor scoring;
+8. TRUST4 TCR/BCR analysis.
 
-1. `fastq_qc`: fastp trimming and quality control;
-2. `batch_salmon`: transcript quantification for each sample;
-3. `merge_salmon`: merge all `quant.sf` files;
-4. `prepare_salmon`: convert transcript TPM to gene-symbol TPM;
-5. `log2_eset`: create the standard downstream matrix;
-6. `calculate_sig_score`: calculate built-in signatures;
-7. run CIBERSORT, IPS, ESTIMATE, MCPcounter, quanTIseq, and EPIC;
-8. merge the six TME outputs;
-9. `LR_cal`: calculate ligand-receptor scores;
-10. `trust4`: reconstruct TCR/BCR sequences from cleaned FASTQ files.
-
-## Expected directory structure
+## Output contract
 
 ```text
 results/gbm-demo/
 ├── 01-qc/
-│   ├── *_fastp.html
-│   ├── *_fastp.json
-│   └── .fastq_qc.done
-├── 02-salmon/
-│   ├── <sample>/quant.sf
-│   ├── GBM_demo_salmon_tpm.tsv.gz
-│   └── GBM_demo_salmon_count.tsv.gz
+├── 02-star/
+│   ├── <sample>_Aligned.sortedByCoord.out.bam
+│   ├── <sample>_ReadsPerGene.out.tab
+│   └── GBM_demo.STAR.count.tsv.gz
 ├── 03-tpm/
-│   ├── prepare_salmon.csv
+│   ├── count2tpm.csv
 │   └── tpm_matrix.csv
 ├── 04-signatures/calculate_sig_score.csv
 ├── 05-tme/
@@ -101,12 +82,16 @@ results/gbm-demo/
 └── 07-TCRBCR/
 ```
 
-## Validate the output structure
+Validate the structural contract:
 
 ```bash
 python scripts/check_outputs.py
 ```
 
-On success, `missing` should be empty in the JSON report, and `tpm_matrix.csv` should contain one gene column and four sample columns.
+The standalone chapters reuse three outputs:
 
-> If the workflow stops, do not delete the entire result directory. Find the first failed native command in `logs/runall.log`, then inspect that stage's inputs, external program, and file structure.
+- `03-tpm/count2tpm.csv` for the BayesPrism teaching run;
+- `05-tme/cibersort_results.csv` for TME clustering;
+- `02-star/*_Aligned.sortedByCoord.out.bam` for HLA typing.
+
+If the workflow stops, keep the existing result directory. Find the first failed native command in `logs/runall.log`, correct that stage, and rerun with the resume-friendly output structure intact.

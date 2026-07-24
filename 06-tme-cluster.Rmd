@@ -1,0 +1,36 @@
+# TME clustering
+
+`tme_cluster` is not executed by `runall`. This chapter clusters samples using the CIBERSORT fractions that `runall` already produced.
+
+## Inspect the input
+
+```bash
+head results/gbm-demo/05-tme/cibersort_results.csv
+iobrpy-cli tme_cluster --help
+```
+
+The input is a sample-by-feature table. The first column is treated as the sample ID, and `--features 1:22` selects the 22 CIBERSORT cell-fraction columns after that ID column.
+
+## Run the teaching example
+
+There are only four samples, so restrict the candidate cluster range:
+
+```bash
+mkdir -p results/gbm-demo/09-tme-cluster
+
+iobrpy-cli tme_cluster \
+  --input results/gbm-demo/05-tme/cibersort_results.csv \
+  --output results/gbm-demo/09-tme-cluster/tme_clusters.csv \
+  --features 1:22 \
+  --min_nc 2 \
+  --max_nc 3 \
+  --print_result
+```
+
+The output contains the sample ID, a label such as `TME1`, and the selected scaled features:
+
+```bash
+column -s, -t < results/gbm-demo/09-tme-cluster/tme_clusters.csv | head
+```
+
+Four samples are enough to demonstrate the command but not to establish reproducible molecular subtypes. A research cohort needs enough samples to support the requested cluster range, stability analysis, and external validation.

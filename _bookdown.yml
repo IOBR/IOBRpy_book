@@ -9,9 +9,10 @@ rmd_files:
   - index.Rmd
   - 01-environment.Rmd
   - 02-demo-fastq.Rmd
-  - 03-salmon-index.Rmd
+  - 03-star-index.Rmd
   - 04-runall.Rmd
-  - 05-read-results.Rmd
-  - 06-step-by-step.Rmd
-  - 07-own-data.Rmd
-  - 08-build-publish.Rmd
+  - 05-bayesprism.Rmd
+  - 06-tme-cluster.Rmd
+  - 07-hla-typing.Rmd
+  - 08-own-data.Rmd
+  - 09-build-publish.Rmd

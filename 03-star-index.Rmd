@@ -1,0 +1,48 @@
+# Build the STAR genome index
+
+## Match the index to the workflow mode
+
+For `runall --mode star`, `--index` must point to a STAR `genomeDir`. Do not supply a Salmon index, FASTA file, or GTF file directly to `runall`.
+
+This tutorial uses matching files from GENCODE human release 36:
+
+- [GRCh38 primary assembly genome FASTA](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/GRCh38.primary_assembly.genome.fa.gz)
+- [GENCODE v36 annotation GTF](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/gencode.v36.annotation.gtf.gz)
+
+## Build the index
+
+Choose a thread count after checking the host, then run:
+
+```bash
+THREADS=4 bash scripts/build_star_index.sh
+```
+
+The script creates:
+
+```text
+reference/
+├── gencode-v36/
+│   ├── GRCh38.primary_assembly.genome.fa
+│   └── gencode.v36.annotation.gtf
+└── star-gencode-v36/
+    ├── Genome
+    ├── SA
+    ├── SAindex
+    └── genomeParameters.txt
+```
+
+The default `SJDB_OVERHANG=100` matches 101-base reads. For another read length, set it to read length minus one before building:
+
+```bash
+THREADS=4 SJDB_OVERHANG=149 bash scripts/build_star_index.sh
+```
+
+## Check the index
+
+```bash
+test -s reference/star-gencode-v36/Genome
+test -s reference/star-gencode-v36/genomeParameters.txt
+STAR --version | tee reference/star-version.txt
+```
+
+The index uses a complete human genome because downstream immune and ligand-receptor analyses require broad gene coverage. A small artificial genome would be fast but would invalidate most of the teaching workflow.

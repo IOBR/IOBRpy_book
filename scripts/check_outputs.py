@@ -11,9 +11,10 @@ from pathlib import Path
 
 EXPECTED_FILES = [
     "01-qc/.fastq_qc.done",
-    "02-salmon/.batch_salmon.done",
-    "02-salmon/.merge_salmon.done",
-    "03-tpm/prepare_salmon.csv",
+    "02-star/.batch_star_count.done",
+    "02-star/.merge_star_count.done",
+    "02-star/GBM_demo.STAR.count.tsv.gz",
+    "03-tpm/count2tpm.csv",
     "03-tpm/tpm_matrix.csv",
     "04-signatures/calculate_sig_score.csv",
     "05-tme/cibersort_results.csv",
@@ -53,11 +54,19 @@ def main() -> int:
     missing = [
         rel for rel in EXPECTED_FILES if not (root / rel).exists()
     ]
+    bam_files = sorted((root / "02-star").glob("*_Aligned.sortedByCoord.out.bam"))
+    count_files = sorted((root / "02-star").glob("*_ReadsPerGene.out.tab"))
+    if len(bam_files) != 4:
+        missing.append("02-star/<four coordinate-sorted BAM files>")
+    if len(count_files) != 4:
+        missing.append("02-star/<four ReadsPerGene tables>")
 
     report: dict[str, object] = {
         "results": str(root),
         "expected_file_count": len(EXPECTED_FILES),
         "missing": missing,
+        "star_bam_count": len(bam_files),
+        "star_count_table_count": len(count_files),
         "tables": {},
     }
 
@@ -91,4 +100,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

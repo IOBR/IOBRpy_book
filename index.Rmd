@@ -1,11 +1,11 @@
 ---
 title: "IOBRpy: From FASTQ to the Tumor Microenvironment"
-author: "Haonan Huang and Dongqiang Zeng"
+author: "Haonan Huang, Dongqiang Zeng"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-description: "A reproducible IOBRpy tutorial using four public glioblastoma RNA-seq samples, from FASTQ quality control and Salmon quantification to TPM, immune infiltration, ligand-receptor scoring, and TRUST4."
+description: "A reproducible IOBRpy tutorial using four public glioblastoma RNA-seq samples, a STAR-based runall workflow, and standalone BayesPrism, TME clustering, and HLA typing analyses."
 ---
 
 # Introduction {#intro}
@@ -14,9 +14,9 @@ description: "A reproducible IOBRpy tutorial using four public glioblastoma RNA-
 knitr::include_graphics('assets/img/IOBRpy.png', dpi = NA)
 ```
 
-This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files and continues through quality control, Salmon quantification, TPM preparation, tumor microenvironment profiling, ligand-receptor scoring, and TRUST4 repertoire analysis.
+This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command uses STAR and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results.
 
-The chapter structure follows the practical style of the [RIMA tutorial](https://liulab-dfci.github.io/RIMA/): prepare the environment and inputs, run the main workflow, and inspect each output module. The commands here cover only functions currently provided by IOBRpy.
+The chapter structure follows the practical style of the [RIMA tutorial](https://liulab-dfci.github.io/RIMA/): prepare the environment and inputs, run the main workflow once, and then run only the analyses that are not included in `runall`. Those standalone chapters cover BayesPrism, TME clustering, and HLA typing.
 
 ## What you will produce
 
@@ -25,21 +25,25 @@ The complete workflow creates:
 ```text
 results/gbm-demo/
 ├── 01-qc/
-├── 02-salmon/
+├── 02-star/
 ├── 03-tpm/
 ├── 04-signatures/
 ├── 05-tme/
 ├── 06-LR_cal/
-└── 07-TCRBCR/
+├── 07-TCRBCR/
+├── 08-bayesprism/
+├── 09-tme-cluster/
+└── 10-hla/
 ```
 
 By the end of the tutorial, you will be able to:
 
 - obtain small paired-end FASTQ subsets from a public repository;
-- build a Salmon index that matches the transcript FASTA;
+- build a STAR genome index that matches the annotation;
 - inspect inputs and validate workflow parameters with `map` and `recommend`;
 - run FASTQ-to-TPM, TME, ligand-receptor, and TRUST4 analysis with `runall`;
-- distinguish cell fractions, abundance scores, signatures, and exploratory outputs;
+- run BayesPrism and TME clustering from the matrices created by `runall`;
+- run HLA typing from the STAR BAM files;
 - replace the teaching data with your own FASTQ files.
 
 ## Teaching dataset
@@ -55,13 +59,13 @@ The example uses four pretreatment glioblastoma samples from [PRJNA482620](https
 
 The downloader does not save each complete source FASTQ file. It streams the first 50,000 complete records from each mate and then closes the network connection.
 
-> **Teaching limitation:** Four samples with 50,000 read pairs each are suitable for learning file organization, command execution, and output structure. They do not support stable group-level inference or publication-quality immune infiltration and repertoire-diversity conclusions.
+> **Teaching limitation:** Four samples with 50,000 read pairs each are suitable for learning file organization, command execution, and output structure. They do not support stable group-level inference or publication-quality immune infiltration, repertoire-diversity, or HLA conclusions. HLA typing may not return a complete call from such a small subset.
 
-## Why the main workflow uses Salmon
+## Why the main workflow uses STAR
 
-IOBRpy `runall` supports both Salmon and STAR. Salmon is used here because the teaching goal is to complete expression quantification and downstream TME analysis with relatively modest resources.
+IOBRpy `runall` supports both Salmon and STAR. This book uses STAR because the HLA chapter requires aligned BAM files. Salmon quantifies transcripts but does not produce the BAM input required by `hla_typing`.
 
-STAR is more appropriate when explicit BAM files, genomic coordinates, or a count-based branch are required, but its genome index, memory, storage, and run-time requirements are higher. The final chapters show how to switch your own data to STAR mode.
+STAR requires more memory, storage, and run time than Salmon. The FASTQ teaching subset is small, but the complete human genome index is not.
 
 ## Conventions
 

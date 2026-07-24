@@ -58,7 +58,7 @@ python scripts/fetch_demo_fastq.py \
   --force
 ```
 
-Larger subsets take longer to download and process with fastp, Salmon, and TRUST4. Production analyses should use complete FASTQ files rather than truncated prefixes.
+Larger subsets take longer to download and process with fastp, STAR, and TRUST4. A larger subset may recover more HLA reads, but production HLA typing should use complete FASTQ files rather than truncated prefixes.
 
 ## Check file integrity
 

@@ -2,14 +2,14 @@
 
 ## Recommended environment
 
-IOBRpy production workflows are designed primarily for POSIX systems. Windows users should use WSL2 or a Linux server. This tutorial also requires external programs such as `fastp`, `Salmon`, and `TRUST4`; installing the Python package alone does not install these tools.
+IOBRpy production workflows are designed primarily for POSIX systems. Windows users should use WSL2 or a Linux server. This tutorial requires external programs for STAR alignment, TRUST4, and the SpecHLA branch; installing the Python package alone does not install all of these tools.
 
 Recommended minimum resources for the tutorial:
 
 - Python 3.11;
 - 4 CPU threads;
-- 16 GB RAM;
-- about 10 GB of free space for the environment, GENCODE transcriptome, Salmon index, and results.
+- 40 GB RAM, with 64 GB preferred;
+- at least 50 GB of free space for the environment, GENCODE genome files, STAR index, BAM files, and results.
 
 Full FASTQ analyses usually require substantially more storage.
 
@@ -20,7 +20,8 @@ If Mamba is available:
 ```bash
 mamba create -n iobrpy-tutorial -y \
   -c conda-forge -c bioconda \
-  python=3.11 pip fastp salmon trust4 samtools multiqc
+  python=3.11 pip fastp star trust4 samtools bamutil \
+  bwa bowtie2 freebayes htslib=1.21 bcftools=1.21 multiqc
 
 conda activate iobrpy-tutorial
 python -m pip install --upgrade pip
@@ -52,8 +53,10 @@ Also check the external tools:
 
 ```bash
 fastp --version
-salmon --version
+STAR --version
 run-trust4 2>&1 | head
+samtools --version | head -n 1
+bowtie2 --version | head -n 1
 ```
 
 If `iobrpy-cli` works but `iobrpy` is not on `PATH`, `runall` will still fail when it launches native subcommands. Fix the environment before rerunning the workflow.
@@ -75,7 +78,7 @@ export THREADS=2
 export BATCH_SIZE=1
 ```
 
-`THREADS` is passed to steps such as fastp, Salmon, signature scoring, and CIBERSORT. `BATCH_SIZE` controls how many samples are processed concurrently. Increasing both settings multiplies CPU and memory demand.
+`THREADS` is passed to steps such as fastp, STAR, signature scoring, and CIBERSORT. `BATCH_SIZE` controls how many samples are processed concurrently. Increasing both settings multiplies CPU and memory demand. Use `BATCH_SIZE=1` unless the host can support multiple simultaneous STAR jobs.
 
 ## Check the native command definitions
 
@@ -84,7 +87,9 @@ Before copying a command, inspect the parameters accepted by the installed versi
 ```bash
 iobrpy-cli commands --json
 iobrpy-cli runall --help
-iobrpy-cli tme_profile --help
+iobrpy-cli bayesprism --help
+iobrpy-cli tme_cluster --help
+iobrpy-cli hla_typing --help
 ```
 
 The main `runall` command in this tutorial uses only parameters declared by the current command definition:

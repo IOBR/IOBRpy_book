@@ -1,0 +1,69 @@
+# HLA typing
+
+HLA typing is a standalone branch. It is the reason this tutorial uses STAR: `hla_typing` requires BAM files, and Salmon mode does not create them.
+
+## Confirm the BAM inputs
+
+STAR `runall` writes coordinate-sorted BAM files directly under `02-star/`:
+
+```bash
+find results/gbm-demo/02-star \
+  -maxdepth 1 \
+  -name '*_Aligned.sortedByCoord.out.bam' \
+  -print
+
+samtools quickcheck \
+  results/gbm-demo/02-star/*_Aligned.sortedByCoord.out.bam
+```
+
+The HLA wrapper scans a flat BAM directory, infers sample IDs from the STAR file names, extracts HLA reads, runs SpecHLA, and merges the sample tables.
+
+## Run RNA-seq HLA typing
+
+Inspect the installed interface:
+
+```bash
+iobrpy-cli hla_typing --help
+```
+
+Then run:
+
+```bash
+iobrpy-cli hla_typing \
+  -b results/gbm-demo/02-star \
+  -r hg38 \
+  -o results/gbm-demo/10-hla \
+  -j 2 \
+  -u 1
+```
+
+The arguments mean:
+
+- `-b`: directory containing BAM files;
+- `-r hg38`: reference assembly used by the STAR index;
+- `-o`: HLA working and result directory;
+- `-j`: resource-checked thread count;
+- `-u 1`: exon/RNA mode.
+
+The first run checks or prepares SpecHLA dependencies and indexes. Expected outputs include:
+
+```text
+10-hla/
+├── ExtractHLAread/<sample>/
+├── SpecHLA/<sample>/hla.result.txt
+└── hla_result_merged.txt
+```
+
+## Teaching-data limitation
+
+The 50,000-read-pair subsets may contain too few HLA-derived reads for complete calls. A missing or partial `hla_result_merged.txt` is therefore a data-depth limitation, not evidence that the command interface is wrong.
+
+To exercise the same branch with more reads:
+
+```bash
+python scripts/fetch_demo_fastq.py \
+  --reads-per-sample 500000 \
+  --force
+```
+
+Rerun `runall` into a new output directory, then point `hla_typing` to its `02-star/` directory. Use complete FASTQ files for research HLA results.
