@@ -53,9 +53,3 @@ The first run checks or prepares SpecHLA dependencies and indexes. Expected outp
 ├── SpecHLA/<sample>/hla.result.txt
 └── hla_result_merged.txt
 ```
-
-## Teaching-data limitation
-
-The 50,000-read-pair subsets may contain too few HLA-derived reads for complete calls. A missing or partial `hla_result_merged.txt` is therefore a data-depth limitation, not evidence that the command interface is wrong.
-
-Use complete FASTQ files for research HLA results. Rerun `runall` into a new output directory, then point `hla_typing` to its `02-star/` directory.

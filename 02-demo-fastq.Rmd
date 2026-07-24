@@ -1,34 +1,22 @@
 # Prepare the FASTQ dataset
 
-## Download 50,000 read pairs
+## Download the FASTQ files
 
-The following code streams the first 50,000 complete records from each FASTQ mate without downloading the full source files:
+Download the complete paired-end FASTQ files from ENA:
 
 ```bash
-python - <<'PY'
-import gzip
-from pathlib import Path
-from urllib.request import urlopen
+mkdir -p data/fastq
 
-runs = {
-    "SRR8281218": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/008/SRR8281218",
-    "SRR8281226": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/006/SRR8281226",
-    "SRR8281245": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/005/SRR8281245",
-    "SRR8281243": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243",
-}
-
-out = Path("data/fastq")
-out.mkdir(parents=True, exist_ok=True)
-for run, base in runs.items():
-    for mate in (1, 2):
-        url = f"{base}/{run}_{mate}.fastq.gz"
-        with urlopen(url) as response, \
-             gzip.GzipFile(fileobj=response) as source, \
-             gzip.open(out / f"{run}_{mate}.fastq.gz", "wb") as target:
-            for _ in range(50_000 * 4):
-                target.write(source.readline())
-        print(f"Downloaded {run}_{mate}.fastq.gz")
-PY
+while read -r run base; do
+  for mate in 1 2; do
+    wget -c "${base}/${run}_${mate}.fastq.gz" -P data/fastq
+  done
+done <<'EOF'
+SRR8281218 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/008/SRR8281218
+SRR8281226 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/006/SRR8281226
+SRR8281245 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/005/SRR8281245
+SRR8281243 https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243
+EOF
 ```
 
 The output directory contains eight files:
@@ -48,16 +36,9 @@ data/fastq/
 ## Check the FASTQ files
 
 ```bash
-python - <<'PY'
-import gzip
-from pathlib import Path
-
-for path in sorted(Path("data/fastq").glob("*.fastq.gz")):
-    with gzip.open(path, "rt") as handle:
-        records = sum(1 for _ in handle) // 4
-    assert records == 50_000
-    print(path.name, records)
-PY
+test "$(find data/fastq -maxdepth 1 -name '*.fastq.gz' | wc -l)" -eq 8
+gzip -t data/fastq/*.fastq.gz
+echo "All eight FASTQ files passed the gzip integrity check."
 ```
 
 Data source: [NCBI BioProject PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620), runs [SRR8281218](https://www.ncbi.nlm.nih.gov/sra/SRR8281218), [SRR8281226](https://www.ncbi.nlm.nih.gov/sra/SRR8281226), [SRR8281245](https://www.ncbi.nlm.nih.gov/sra/SRR8281245), and [SRR8281243](https://www.ncbi.nlm.nih.gov/sra/SRR8281243).

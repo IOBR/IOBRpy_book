@@ -36,7 +36,7 @@ results/gbm-demo/
 
 By the end of the tutorial, you will be able to:
 
-- obtain small paired-end FASTQ subsets from a public repository;
+- obtain complete paired-end FASTQ files from a public repository;
 - build a STAR genome index that matches the annotation;
 - inspect inputs and validate workflow parameters with `map` and `recommend`;
 - run FASTQ-to-TPM, TME, ligand-receptor, and TRUST4 analysis with `runall`;
@@ -55,15 +55,13 @@ The example uses four pretreatment glioblastoma samples from [PRJNA482620](https
 | SRR8281245 | P100 | R | Pre | paired-end RNA-seq |
 | SRR8281243 | P101 | R | Pre | paired-end RNA-seq |
 
-The downloader does not save each complete source FASTQ file. It streams the first 50,000 complete records from each mate and then closes the network connection.
-
-> **Teaching limitation:** Four samples with 50,000 read pairs each are suitable for learning file organization, command execution, and output structure. They do not support stable group-level inference or publication-quality immune infiltration, repertoire-diversity, or HLA conclusions. HLA typing may not return a complete call from such a small subset.
+> **Teaching limitation:** Four samples are suitable for learning file organization, command execution, and output structure. This cohort is too small for stable group-level inference.
 
 ## Why the main workflow uses STAR
 
 IOBRpy `runall` supports both Salmon and STAR. This book uses STAR because the HLA chapter requires aligned BAM files. Salmon quantifies transcripts but does not produce the BAM input required by `hla_typing`.
 
-STAR requires more memory, storage, and run time than Salmon. The FASTQ teaching subset is small, but the complete human genome index is not.
+STAR requires more memory, storage, and run time than Salmon. The complete FASTQ files and human genome index require substantial disk space.
 
 ## Conventions
 

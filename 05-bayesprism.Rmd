@@ -38,7 +38,7 @@ The output directory contains:
 - `theta_cv.csv` contains posterior coefficient-of-variation values.
 - `Z_tumor.csv` contains the inferred expression profile for the malignant-cell component.
 
-The current implementation converts the input values to integers internally. The command above is a compact software tutorial using the non-log matrix produced by `runall`; it is not a validated reference-analysis design for this four-sample subset.
+The current implementation converts the input values to integers internally. The command above is a compact software tutorial using the non-log matrix produced by `runall`; it is not a validated reference-analysis design for this four-sample dataset.
 
 ## Use a custom single-cell reference
 
