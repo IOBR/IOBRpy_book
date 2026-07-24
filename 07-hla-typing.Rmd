@@ -58,12 +58,4 @@ The first run checks or prepares SpecHLA dependencies and indexes. Expected outp
 
 The 50,000-read-pair subsets may contain too few HLA-derived reads for complete calls. A missing or partial `hla_result_merged.txt` is therefore a data-depth limitation, not evidence that the command interface is wrong.
 
-To exercise the same branch with more reads:
-
-```bash
-python scripts/fetch_demo_fastq.py \
-  --reads-per-sample 500000 \
-  --force
-```
-
-Rerun `runall` into a new output directory, then point `hla_typing` to its `02-star/` directory. Use complete FASTQ files for research HLA results.
+Use complete FASTQ files for research HLA results. Rerun `runall` into a new output directory, then point `hla_typing` to its `02-star/` directory.

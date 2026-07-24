@@ -1,17 +1,5 @@
 # Installation and environment checks
 
-## Recommended environment
-
-IOBRpy production workflows are designed primarily for POSIX systems. Windows users should use WSL2 or a Linux server. The Bioconda package resolves the required dependencies automatically.
-
-Recommended minimum resources for the tutorial:
-
-- 4 CPU threads;
-- 40 GB RAM, with 64 GB preferred;
-- at least 50 GB of free space for the environment, GENCODE genome files, STAR index, BAM files, and results.
-
-Full FASTQ analyses usually require substantially more storage.
-
 ## Create a Conda environment
 
 ```bash

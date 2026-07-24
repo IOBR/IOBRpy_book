@@ -3,23 +3,15 @@
 ## Run `runall`
 
 ```bash
-THREADS=2 BATCH_SIZE=1 bash scripts/run_demo.sh
-```
-
-The script runs the validated native command:
-
-```bash
 iobrpy runall \
   --fastq data/fastq \
   --outdir results/gbm-demo \
   --mode star \
   --index reference/star-gencode-v36 \
-  --threads "${THREADS}" \
-  --batch_size "${BATCH_SIZE}" \
+  --threads 2 \
+  --batch_size 1 \
   --project GBM_demo
 ```
-
-The log is saved as `logs/runall.log`.
 
 ## What is already included
 
@@ -59,16 +51,10 @@ results/gbm-demo/
 └── 07-TCRBCR/
 ```
 
-Validate the structural contract:
-
-```bash
-python scripts/check_outputs.py
-```
-
 The standalone chapters reuse three outputs:
 
 - `03-tpm/count2tpm.csv` for the BayesPrism teaching run;
 - `05-tme/cibersort_results.csv` for TME clustering;
 - `02-star/*_Aligned.sortedByCoord.out.bam` for HLA typing.
 
-If the workflow stops, keep the existing result directory. Find the first failed native command in `logs/runall.log`, correct that stage, and rerun with the resume-friendly output structure intact.
+If the workflow stops, keep the existing result directory, correct the failed stage, and rerun with the resume-friendly output structure intact.

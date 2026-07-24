@@ -11,13 +11,29 @@ This tutorial uses matching files from GENCODE human release 36:
 
 ## Build the index
 
-Choose a thread count after checking the host, then run:
-
 ```bash
-THREADS=4 bash scripts/build_star_index.sh
+mkdir -p reference/gencode-v36 reference/star-gencode-v36
+
+wget -c \
+  https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/GRCh38.primary_assembly.genome.fa.gz \
+  -O reference/gencode-v36/GRCh38.primary_assembly.genome.fa.gz
+wget -c \
+  https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/gencode.v36.annotation.gtf.gz \
+  -O reference/gencode-v36/gencode.v36.annotation.gtf.gz
+
+gzip -dk reference/gencode-v36/GRCh38.primary_assembly.genome.fa.gz
+gzip -dk reference/gencode-v36/gencode.v36.annotation.gtf.gz
+
+STAR \
+  --runMode genomeGenerate \
+  --runThreadN 4 \
+  --genomeDir reference/star-gencode-v36 \
+  --genomeFastaFiles reference/gencode-v36/GRCh38.primary_assembly.genome.fa \
+  --sjdbGTFfile reference/gencode-v36/gencode.v36.annotation.gtf \
+  --sjdbOverhang 100
 ```
 
-The script creates:
+This creates:
 
 ```text
 reference/
@@ -31,11 +47,7 @@ reference/
     └── genomeParameters.txt
 ```
 
-The default `SJDB_OVERHANG=100` matches 101-base reads. For another read length, set it to read length minus one before building:
-
-```bash
-THREADS=4 SJDB_OVERHANG=149 bash scripts/build_star_index.sh
-```
+`--sjdbOverhang 100` matches 101-base reads. For another read length, set this value to read length minus one.
 
 ## Check the index
 
