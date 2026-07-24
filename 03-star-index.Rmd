@@ -42,13 +42,12 @@ STAR --runMode genomeGenerate \
      --genomeDir "$STAR_INDEX" \
      --genomeFastaFiles "$genome_fa" \
      --sjdbGTFfile "$gtf" \
-     --runThreadN 16 \
+     --runThreadN 4 \
      --sjdbOverhang 100
 ```
 
 ## Notes
 
-- **Release/assembly:** This guide uses **GENCODE v44** (GRCh38). If you need a different release or assembly, update the URLs and filenames accordingly.
-- **Threads:** Increase `--runThreadN` to speed up indexing if you have more cores.
+- **Release/assembly:** This guide uses **GENCODE v44** (GRCh38).
+- **Threads:** This tutorial uses 4 threads.
 - **Storage:** STAR indexes are large (tens of GB). Ensure you have enough disk space.
-- **Read length:** Set `--sjdbOverhang = read_length - 1` for best splice junction annotations.

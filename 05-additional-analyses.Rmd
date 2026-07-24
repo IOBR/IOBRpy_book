@@ -1,0 +1,61 @@
+# Additional analyses
+
+## BayesPrism
+
+```bash
+iobrpy bayesprism \
+  --input results/PRJNA482620/03-tpm/tpm_matrix.csv \
+  --output results/PRJNA482620/08-bayesprism \
+  --threads 4
+```
+
+Example results:
+
+```text
+results/PRJNA482620/08-bayesprism/
+├── theta.csv
+├── theta_cv.csv
+└── Z_tumor.csv
+```
+
+## TME clustering
+
+```bash
+mkdir -p results/PRJNA482620/09-tme-cluster
+
+iobrpy tme_cluster \
+  --input results/PRJNA482620/05-tme/cibersort_results.csv \
+  --output results/PRJNA482620/09-tme-cluster/tme_clusters.csv \
+  --features 1:22 \
+  --min_nc 2 \
+  --max_nc 3 \
+  --print_result
+```
+
+Example result:
+
+```text
+ID,cluster,<selected features>
+<sample_1>,TME1,...
+<sample_2>,TME2,...
+```
+
+## HLA typing
+
+```bash
+iobrpy hla_typing \
+  -b results/PRJNA482620/02-star \
+  -r hg38 \
+  -o results/PRJNA482620/10-hla \
+  -j 4 \
+  -u 1
+```
+
+Example results:
+
+```text
+results/PRJNA482620/10-hla/
+├── ExtractHLAread/<sample>/
+├── SpecHLA/<sample>/hla.result.txt
+└── hla_result_merged.txt
+```

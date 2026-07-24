@@ -11,8 +11,4 @@ rmd_files:
   - 02-demo-fastq.Rmd
   - 03-star-index.Rmd
   - 04-runall.Rmd
-  - 05-bayesprism.Rmd
-  - 06-tme-cluster.Rmd
-  - 07-hla-typing.Rmd
-  - 08-own-data.Rmd
-  - 09-build-publish.Rmd
+  - 05-additional-analyses.Rmd

@@ -14,14 +14,14 @@ description: "A reproducible IOBRpy tutorial using four public glioblastoma RNA-
 knitr::include_graphics('assets/img/IOBRpy.png', dpi = NA)
 ```
 
-This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command uses STAR and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results. Separate chapters cover BayesPrism, TME clustering, and HLA typing.
+This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command uses STAR and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results. A separate chapter covers BayesPrism, TME clustering, and HLA typing.
 
 ## What you will produce
 
 The complete workflow creates:
 
 ```text
-results/gbm-demo/
+results/PRJNA482620/
 ├── 01-qc/
 ├── 02-star/
 ├── 03-tpm/
@@ -38,11 +38,9 @@ By the end of the tutorial, you will be able to:
 
 - obtain complete paired-end FASTQ files from a public repository;
 - build a STAR genome index that matches the annotation;
-- inspect inputs and validate workflow parameters with `map` and `recommend`;
 - run FASTQ-to-TPM, TME, ligand-receptor, and TRUST4 analysis with `runall`;
 - run BayesPrism and TME clustering from the matrices created by `runall`;
 - run HLA typing from the STAR BAM files;
-- replace the teaching data with your own FASTQ files.
 
 ## Teaching dataset
 

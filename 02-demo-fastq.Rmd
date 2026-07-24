@@ -17,6 +17,20 @@ wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243/SRR8281243_1.
 wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR828/003/SRR8281243/SRR8281243_2.fastq.gz -P data/fastq
 ```
 
+The output directory contains:
+
+```text
+data/fastq/
+├── SRR8281218_1.fastq.gz
+├── SRR8281218_2.fastq.gz
+├── SRR8281226_1.fastq.gz
+├── SRR8281226_2.fastq.gz
+├── SRR8281243_1.fastq.gz
+├── SRR8281243_2.fastq.gz
+├── SRR8281245_1.fastq.gz
+└── SRR8281245_2.fastq.gz
+```
+
 ## Check the FASTQ files
 
 ```bash

@@ -2,15 +2,17 @@
 
 ## Run `runall`
 
+Use [PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620) as the project identifier:
+
 ```bash
 iobrpy runall \
   --fastq data/fastq \
-  --outdir results/gbm-demo \
+  --outdir results/PRJNA482620 \
   --mode star \
   --index /path/to/index/dir/star \
-  --threads 2 \
+  --threads 4 \
   --batch_size 1 \
-  --project GBM_demo
+  --project PRJNA482620
 ```
 
 ## What is already included
@@ -29,12 +31,12 @@ Do not rerun these components in separate chapters. STAR `runall` already perfor
 ## Output contract
 
 ```text
-results/gbm-demo/
+results/PRJNA482620/
 ├── 01-qc/
 ├── 02-star/
 │   ├── <sample>_Aligned.sortedByCoord.out.bam
 │   ├── <sample>_ReadsPerGene.out.tab
-│   └── GBM_demo.STAR.count.tsv.gz
+│   └── PRJNA482620.STAR.count.tsv.gz
 ├── 03-tpm/
 │   ├── count2tpm.csv
 │   └── tpm_matrix.csv
@@ -51,9 +53,9 @@ results/gbm-demo/
 └── 07-TCRBCR/
 ```
 
-The standalone chapters reuse three outputs:
+The additional analyses chapter reuses three outputs:
 
-- `03-tpm/count2tpm.csv` for the BayesPrism teaching run;
+- `03-tpm/tpm_matrix.csv` for the BayesPrism teaching run;
 - `05-tme/cibersort_results.csv` for TME clustering;
 - `02-star/*_Aligned.sortedByCoord.out.bam` for HLA typing.
 
