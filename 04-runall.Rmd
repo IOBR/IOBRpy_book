@@ -15,7 +15,7 @@ iobrpy runall \
 
 ## What is already included
 
-Do not rerun these components in separate chapters. STAR `runall` already performs:
+Do not rerun these components in separate chapters. STAR mode `runall` already performs:
 
 1. fastp quality control;
 2. STAR alignment and gene counting;
@@ -35,8 +35,8 @@ results/PRJDB16684/
 │   ├── <sample>_ReadsPerGene.out.tab
 │   └── PRJDB16684.STAR.count.tsv.gz
 ├── 03-tpm/
-│   ├── count2tpm.csv          # TPM converted from the count matrix
-│   └── tpm_matrix.csv         # count2tpm.csv after log2 transformation
+│   ├── count2tpm.csv
+│   └── tpm_matrix.csv
 ├── 04-signatures/calculate_sig_score.csv
 ├── 05-tme/
 │   ├── cibersort_results.csv

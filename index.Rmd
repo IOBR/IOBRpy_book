@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-description: "A reproducible IOBRpy tutorial using six public colorectal cancer spheroid RNA-seq samples, a STAR-based runall workflow, and standalone BayesPrism, TME clustering, and HLA typing analyses."
+description: "A reproducible IOBRpy tutorial using six public colorectal cancer spheroid RNA-seq samples, a STAR mode runall workflow, and standalone BayesPrism, TME clustering, and HLA typing analyses."
 ---
 
 # Introduction {#intro}
@@ -14,7 +14,7 @@ description: "A reproducible IOBRpy tutorial using six public colorectal cancer 
 knitr::include_graphics('assets/img/IOBRpy.png', dpi = NA)
 ```
 
-This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command uses STAR and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results. A separate chapter covers BayesPrism, TME clustering, and HLA typing.
+This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command runs in STAR mode and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results. A separate chapter covers BayesPrism, TME clustering, and HLA typing.
 
 ## Output directories
 
