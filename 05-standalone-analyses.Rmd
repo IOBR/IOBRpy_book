@@ -36,12 +36,6 @@ iobrpy tme_cluster \
   --print_result
 ```
 
-```text
-ID,cluster,<selected features>
-<sample_1>,TME1,...
-<sample_2>,TME2,...
-```
-
 ## HLA typing
 
 ```bash
