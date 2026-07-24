@@ -1,0 +1,54 @@
+# Build the Salmon transcriptome index
+
+## Match the index to the workflow mode
+
+For `runall --mode salmon`, `--index` must point to a Salmon transcriptome index directory. Do not supply a STAR genome index, FASTA file, or GTF file.
+
+This tutorial uses the GENCODE human release 36 transcript FASTA:
+
+```text
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/
+```
+
+GENCODE FASTA headers contain ENST, ENSG, and gene-symbol fields. IOBRpy `prepare_salmon` uses these fields to convert the merged transcript TPM table into a gene symbol × sample matrix.
+
+## Build the index
+
+```bash
+bash scripts/build_salmon_index.sh
+```
+
+The script creates:
+
+```text
+reference/
+├── gencode-v36/
+│   ├── gencode.v36.transcripts.fa.gz
+│   └── gencode.v36.transcripts.fa
+└── salmon-gencode-v36/
+    ├── versionInfo.json
+    └── ...
+```
+
+If `versionInfo.json` already exists, the script stops instead of rebuilding the index.
+
+## Check the index
+
+```bash
+test -s reference/salmon-gencode-v36/versionInfo.json
+python -m json.tool reference/salmon-gencode-v36/versionInfo.json
+```
+
+Record the Salmon version:
+
+```bash
+salmon --version | tee reference/salmon-version.txt
+```
+
+`reference/salmon-version.txt` is a local run record and is excluded from Git by default.
+
+## Why the tutorial does not use a tiny artificial index
+
+A mini-transcriptome containing only a few genes would make Salmon faster, but it would systematically remove most of the expression space required by immune infiltration, signature, and ligand-receptor analyses. The tutorial therefore uses small FASTQ subsets with a complete human transcriptome index.
+
+This is still a teaching run. Sparse reads will produce zero TPM values for many genes, so the output must not be treated as a production cohort analysis.

@@ -1,0 +1,71 @@
+---
+title: "IOBRpy: From FASTQ to the Tumor Microenvironment"
+author: "Haonan Huang and Dongqiang Zeng"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+description: "A reproducible IOBRpy tutorial using four public glioblastoma RNA-seq samples, from FASTQ quality control and Salmon quantification to TPM, immune infiltration, ligand-receptor scoring, and TRUST4."
+---
+
+# Introduction {#intro}
+
+```{r fig.align='center', echo=FALSE, out.width='100%', fig.cap='IOBRpy workflow'}
+knitr::include_graphics('assets/img/IOBRpy.png', dpi = NA)
+```
+
+This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files and continues through quality control, Salmon quantification, TPM preparation, tumor microenvironment profiling, ligand-receptor scoring, and TRUST4 repertoire analysis.
+
+The chapter structure follows the practical style of the [RIMA tutorial](https://liulab-dfci.github.io/RIMA/): prepare the environment and inputs, run the main workflow, and inspect each output module. The commands here cover only functions currently provided by IOBRpy.
+
+## What you will produce
+
+The complete workflow creates:
+
+```text
+results/gbm-demo/
+├── 01-qc/
+├── 02-salmon/
+├── 03-tpm/
+├── 04-signatures/
+├── 05-tme/
+├── 06-LR_cal/
+└── 07-TCRBCR/
+```
+
+By the end of the tutorial, you will be able to:
+
+- obtain small paired-end FASTQ subsets from a public repository;
+- build a Salmon index that matches the transcript FASTA;
+- inspect inputs and validate workflow parameters with `map` and `recommend`;
+- run FASTQ-to-TPM, TME, ligand-receptor, and TRUST4 analysis with `runall`;
+- distinguish cell fractions, abundance scores, signatures, and exploratory outputs;
+- replace the teaching data with your own FASTQ files.
+
+## Teaching dataset
+
+The example uses four pretreatment glioblastoma samples from [PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620). This anti-PD-1 glioblastoma study is also used by the RIMA tutorial. The source study is [Zhao et al., Nature Medicine (2019)](https://doi.org/10.1038/s41591-019-0349-y).
+
+| Run | Patient | Teaching group | Time point | Library |
+|---|---:|---:|---:|---|
+| SRR8281218 | P20 | NR | Pre | paired-end RNA-seq |
+| SRR8281226 | P53 | NR | Pre | paired-end RNA-seq |
+| SRR8281245 | P100 | R | Pre | paired-end RNA-seq |
+| SRR8281243 | P101 | R | Pre | paired-end RNA-seq |
+
+The downloader does not save each complete source FASTQ file. It streams the first 50,000 complete records from each mate and then closes the network connection.
+
+> **Teaching limitation:** Four samples with 50,000 read pairs each are suitable for learning file organization, command execution, and output structure. They do not support stable group-level inference or publication-quality immune infiltration and repertoire-diversity conclusions.
+
+## Why the main workflow uses Salmon
+
+IOBRpy `runall` supports both Salmon and STAR. Salmon is used here because the teaching goal is to complete expression quantification and downstream TME analysis with relatively modest resources.
+
+STAR is more appropriate when explicit BAM files, genomic coordinates, or a count-based branch are required, but its genome index, memory, storage, and run-time requirements are higher. The final chapters show how to switch your own data to STAR mode.
+
+## Conventions
+
+- Commands are written for Bash on Linux, macOS, or WSL2.
+- Expression matrices use **genes × samples** orientation.
+- `iobrpy-cli` performs environment checks, path analysis, and parameter validation; installed IOBRpy native commands execute the workflow steps.
+- Paths are relative to the `IOBRpy_book/` repository root.

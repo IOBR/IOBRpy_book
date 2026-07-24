@@ -1,0 +1,17 @@
+book_filename: "iobrpy-fastq-to-tme"
+output_dir: "_book"
+delete_merged_file: true
+new_session: true
+language:
+  ui:
+    chapter_name: "Chapter "
+rmd_files:
+  - index.Rmd
+  - 01-environment.Rmd
+  - 02-demo-fastq.Rmd
+  - 03-salmon-index.Rmd
+  - 04-runall.Rmd
+  - 05-read-results.Rmd
+  - 06-step-by-step.Rmd
+  - 07-own-data.Rmd
+  - 08-build-publish.Rmd

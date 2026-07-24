@@ -1,0 +1,12 @@
+bookdown::gitbook:
+  css: style.css
+  split_by: rmd
+  number_sections: true
+  self_contained: false
+  config:
+    toc:
+      before: |
+        <li><a href="./">IOBRpy FASTQ-to-TME Tutorial</a></li>
+      after: |
+        <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
+    download: false

@@ -1,0 +1,105 @@
+# Run `runall` step by step
+
+When the complete workflow fails, prove one narrow end-to-end stage instead of repeatedly rerunning every step.
+
+The commands below show the Salmon branch. Select thread counts after checking the current host:
+
+```bash
+export THREADS=2
+export BATCH_SIZE=1
+mkdir -p results/manual/{01-qc,02-salmon,03-tpm,04-downstream}
+```
+
+## 1. FASTQ quality control
+
+```bash
+iobrpy-cli fastq_qc \
+  --path1_fastq data/fastq \
+  --path2_fastp results/manual/01-qc \
+  --num_threads "${THREADS}" \
+  --batch_size "${BATCH_SIZE}"
+```
+
+Confirm that cleaned R1/R2 files and the fastp JSON and HTML reports exist before continuing.
+
+## 2. Batch Salmon quantification
+
+```bash
+iobrpy-cli batch_salmon \
+  --index reference/salmon-gencode-v36 \
+  --path_fq results/manual/01-qc \
+  --path_out results/manual/02-salmon \
+  --batch_size "${BATCH_SIZE}" \
+  --num_threads "${THREADS}"
+```
+
+Every sample must contain a non-empty `quant.sf`.
+
+## 3. Merge transcript TPM
+
+```bash
+iobrpy-cli merge_salmon \
+  --path_salmon results/manual/02-salmon \
+  --project GBM_demo \
+  --num_processes "${THREADS}"
+```
+
+The merged files are written to the Salmon root directory:
+
+```text
+results/manual/02-salmon/GBM_demo_salmon_tpm.tsv.gz
+results/manual/02-salmon/GBM_demo_salmon_count.tsv.gz
+```
+
+## 4. Prepare gene-symbol TPM
+
+```bash
+iobrpy-cli prepare_salmon \
+  --input results/manual/02-salmon/GBM_demo_salmon_tpm.tsv.gz \
+  --output results/manual/03-tpm/prepare_salmon.csv \
+  --return_feature symbol \
+  --remove_version
+```
+
+Then create the downstream matrix:
+
+```bash
+iobrpy-cli log2_eset \
+  --input results/manual/03-tpm/prepare_salmon.csv \
+  --output results/manual/03-tpm/tpm_matrix.csv
+```
+
+## 5. Continue TME analysis from a matrix
+
+If FASTQ-to-TPM completed successfully, do not rerun fastp and Salmon:
+
+```bash
+iobrpy-cli tme_profile \
+  --input results/manual/03-tpm/tpm_matrix.csv \
+  --output results/manual/04-downstream \
+  --threads "${THREADS}"
+```
+
+`tme_profile` has no `--mode` parameter. It accepts an existing genes × samples expression matrix, an output directory, and an optional thread count.
+
+## 6. Run TRUST4 separately
+
+```bash
+iobrpy-cli trust4 \
+  --fqdir results/manual/01-qc \
+  -o results/manual/07-TCRBCR \
+  -t "${THREADS}"
+```
+
+If repertoire analysis is the only goal, Salmon and TME analysis do not need to finish before TRUST4.
+
+## Diagnostic order
+
+Return to the earliest uncertain stage:
+
+1. verify that FASTQ files decompress and R1/R2 have equal record counts;
+2. verify that fastp produced cleaned reads;
+3. verify that Salmon produced `quant.sf` for every sample;
+4. verify that the merged `Name` field retains the pipe-delimited GENCODE header;
+5. verify that gene-symbol TPM is arranged as genes × samples;
+6. then inspect the specific TME method or external tool.

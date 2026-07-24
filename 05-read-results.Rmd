@@ -1,0 +1,142 @@
+# Read and interpret the results
+
+## Check QC before plotting results
+
+Open:
+
+```text
+results/gbm-demo/01-qc/<sample>_fastp.html
+```
+
+Check at least:
+
+- raw and cleaned read counts;
+- Q20 and Q30;
+- adapter trimming;
+- read-length distribution;
+- whether any sample differs markedly from the others.
+
+The tutorial data are prefixes of the source files and cannot be used to assess the sequencing depth of the complete samples.
+
+## Salmon quantification
+
+For each sample, inspect:
+
+```text
+results/gbm-demo/02-salmon/<sample>/quant.sf
+```
+
+This file contains `Name`, `Length`, `EffectiveLength`, `TPM`, and `NumReads`. Check the Salmon mapping rate first. If it is very low, verify:
+
+1. the organism is human;
+2. the index is a human transcriptome index;
+3. the paired FASTQ files are correctly matched;
+4. read length and fastp filtering are reasonable.
+
+## TPM matrices
+
+`prepare_salmon.csv` is the gene symbol × sample TPM matrix. `tpm_matrix.csv` is the `log2(x+1)` matrix used by downstream IOBRpy steps.
+
+```bash
+python - <<'PY'
+import pandas as pd
+
+tpm = pd.read_csv("results/gbm-demo/03-tpm/prepare_salmon.csv", index_col=0)
+log_tpm = pd.read_csv("results/gbm-demo/03-tpm/tpm_matrix.csv", index_col=0)
+
+print("TPM:", tpm.shape, "range:", tpm.min().min(), tpm.max().max())
+print("log2 TPM:", log_tpm.shape, "range:", log_tpm.min().min(), log_tpm.max().max())
+print("samples:", list(tpm.columns))
+PY
+```
+
+Check that:
+
+- rows are gene symbols and columns are the four SRR samples;
+- no metadata string columns are mixed into the matrix;
+- gene symbols are unique after deduplication;
+- the small subsets produce many zero or near-zero genes.
+
+## Signature scores
+
+```text
+results/gbm-demo/04-signatures/calculate_sig_score.csv
+```
+
+The default integrated output may contain PCA, mean-expression `zscore`, and ssGSEA-style columns. In this implementation, `zscore` summarizes the mean expression of signature genes; it should not be described as strict statistical z-standardization.
+
+The tutorial subsets are suitable for checking column names and sample orientation, not for claiming that a pathway is significantly increased in responders.
+
+## The six TME outputs use different scales
+
+| Method | Output meaning | Directly comparable with other methods? |
+|---|---|---|
+| CIBERSORT | Relative cell-composition estimate | No |
+| quanTIseq | Cell-fraction estimate | No |
+| EPIC | Cell-fraction/composition estimate | No |
+| MCPcounter | Marker-based abundance score | No |
+| ESTIMATE | Immune, stromal, and purity-context scores | No |
+| IPS | Immunophenoscore-related score | No |
+
+`deconvo_merged.csv` is a convenient horizontal merge by `ID`. It does not calibrate the different algorithms to a common numerical scale.
+
+Quick check:
+
+```bash
+python - <<'PY'
+import pandas as pd
+
+path = "results/gbm-demo/05-tme/deconvo_merged.csv"
+deconv = pd.read_csv(path)
+print(deconv.shape)
+print(deconv.iloc[:, :8])
+PY
+```
+
+## Ligand-receptor scores
+
+```text
+results/gbm-demo/06-LR_cal/lr_cal.csv
+```
+
+Each column represents an expression-derived score for one ligand-receptor pair. These bulk-expression co-expression or minimum-expression scores do not demonstrate spatial adjacency, physical cell-cell contact, or causal signaling.
+
+Low coverage can remove ligands or receptors from the subset and reduce the number of calculable pairs.
+
+## TRUST4
+
+`07-TCRBCR/` is a separate repertoire branch. Fifty thousand read pairs are usually shallow for TCR/BCR reconstruction:
+
+- generated files do not imply stable clonotype estimates;
+- an undetected clonotype is not evidence of biological absence;
+- this subset cannot support responder versus non-responder clonality comparisons.
+
+Production repertoire analyses should use complete FASTQ files and report assemblable reads, CDR3 counts, and sequencing depth.
+
+## A suitable teaching comparison
+
+You can join the four samples with their metadata to practice plotting:
+
+```bash
+python - <<'PY'
+import pandas as pd
+import matplotlib.pyplot as plt
+
+meta = pd.read_csv("data/demo_samples.csv")
+ips = pd.read_csv("results/gbm-demo/05-tme/IPS_results.csv")
+plot_df = meta.merge(ips, left_on="run_accession", right_on="ID")
+
+ax = plot_df.plot.bar(
+    x="run_accession",
+    y="IPS_IPS",
+    color=plot_df["group"].map({"R": "#e76f51", "NR": "#006d77"}),
+    legend=False,
+)
+ax.set_ylabel("IPS teaching output")
+ax.set_xlabel("")
+plt.tight_layout()
+plt.show()
+PY
+```
+
+This figure only demonstrates how to join metadata and results. It does not support treatment-response inference, and exploratory `P` values should not be calculated or reported for four samples.

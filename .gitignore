@@ -1,0 +1,12 @@
+_book/
+_main_files/
+_bookdown_files/
+.r-library/
+data/fastq/
+reference/
+results/
+logs/
+*.html
+*.utf8.md
+*.knit.md
+*.rds

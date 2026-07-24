@@ -1,0 +1,93 @@
+# Prepare the small FASTQ dataset
+
+## Data source and sample selection
+
+All four runs come from the human paired-end RNA-seq project `PRJNA482620`. The tutorial uses two pretreatment responders and two pretreatment non-responders so that sample names and metadata retain their original biological meaning. The small subsets do not support treatment-response comparisons.
+
+Source URLs, ENA accessions, source-file MD5 checksums, and source-file sizes are pinned in:
+
+```text
+data/demo_samples.csv
+```
+
+## Stream 50,000 read pairs
+
+Run from the `IOBRpy_book/` directory:
+
+```bash
+python scripts/fetch_demo_fastq.py
+```
+
+The script creates:
+
+```text
+data/fastq/
+├── SRR8281218_1.fastq.gz
+├── SRR8281218_2.fastq.gz
+├── SRR8281226_1.fastq.gz
+├── SRR8281226_2.fastq.gz
+├── SRR8281243_1.fastq.gz
+├── SRR8281243_2.fastq.gz
+├── SRR8281245_1.fastq.gz
+├── SRR8281245_2.fastq.gz
+└── subset_manifest.json
+```
+
+The downloader is reproducible because it:
+
+1. pins each run and mate-specific source URL;
+2. writes only complete four-line FASTQ records;
+3. verifies equal R1 and R2 record counts;
+4. uses a fixed gzip timestamp and records a SHA-256 checksum for every subset.
+
+## Change the subset size
+
+For a downloader smoke test:
+
+```bash
+python scripts/fetch_demo_fastq.py \
+  --reads-per-sample 1000 \
+  --output-dir /tmp/iobrpy-fastq-smoke
+```
+
+For somewhat richer quantification output, regenerate 200,000 read pairs:
+
+```bash
+python scripts/fetch_demo_fastq.py \
+  --reads-per-sample 200000 \
+  --force
+```
+
+Larger subsets take longer to download and process with fastp, Salmon, and TRUST4. Production analyses should use complete FASTQ files rather than truncated prefixes.
+
+## Check file integrity
+
+```bash
+python - <<'PY'
+import gzip
+from pathlib import Path
+
+for path in sorted(Path("data/fastq").glob("*.fastq.gz")):
+    with gzip.open(path, "rt") as handle:
+        lines = sum(1 for _ in handle)
+    assert lines % 4 == 0
+    print(path.name, "records =", lines // 4)
+PY
+```
+
+Each file should contain 50,000 records. You can also inspect the download manifest:
+
+```bash
+python -m json.tool data/fastq/subset_manifest.json | less
+```
+
+## Why file names matter
+
+By default, IOBRpy identifies R1 using `_1.fastq.gz` and infers the corresponding `_2.fastq.gz` file. The tutorial therefore creates:
+
+```text
+<sample>_1.fastq.gz
+<sample>_2.fastq.gz
+```
+
+If your files use names such as `_R1_001.fastq.gz`, inspect the relevant command help and handle the suffix explicitly instead of renaming files blindly.
