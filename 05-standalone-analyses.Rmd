@@ -2,7 +2,7 @@
 
 ## BayesPrism
 
-BayesPrism performs immune deconvolution of bulk expression profiles using a single-cell reference.
+BayesPrism performs immune deconvolution of TPM data using a single-cell reference.
 
 ```bash
 iobrpy bayesprism \
