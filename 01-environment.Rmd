@@ -2,56 +2,26 @@
 
 ## Recommended environment
 
-IOBRpy production workflows are designed primarily for POSIX systems. Windows users should use WSL2 or a Linux server. This tutorial installs IOBRpy from Bioconda together with the external programs required for STAR alignment, TRUST4, and the SpecHLA branch.
+IOBRpy production workflows are designed primarily for POSIX systems. Windows users should use WSL2 or a Linux server. The Bioconda package resolves the required dependencies automatically.
 
 Recommended minimum resources for the tutorial:
 
-- Python 3.11;
 - 4 CPU threads;
 - 40 GB RAM, with 64 GB preferred;
 - at least 50 GB of free space for the environment, GENCODE genome files, STAR index, BAM files, and results.
 
 Full FASTQ analyses usually require substantially more storage.
 
-## Create an isolated environment
-
-If Mamba is available:
+## Create a Conda environment
 
 ```bash
-mamba create -n iobrpy-tutorial -y \
-  -c conda-forge -c bioconda \
-  python=3.11 iobrpy fastp star trust4 samtools bamutil \
-  bwa bowtie2 freebayes htslib=1.21 bcftools=1.21 multiqc
-
-conda activate iobrpy-tutorial
+conda create -n iobrpy -y
+conda activate iobrpy
+conda install -y -c conda-forge -c bioconda iobrpy
 ```
-
-Replace `mamba` with `conda` if needed. IOBRpy is available from the [Bioconda package channel](https://anaconda.org/bioconda/iobrpy).
 
 ## Verify the installation
 
 ```bash
 iobrpy --help
-fastp --version
-STAR --version
-run-trust4 2>&1 | head
-samtools --version | head -n 1
-bowtie2 --version | head -n 1
-```
-
-## Check the available commands
-
-Before copying a command, inspect the parameters accepted by the installed version:
-
-```bash
-iobrpy runall --help
-iobrpy bayesprism --help
-iobrpy tme_cluster --help
-iobrpy hla_typing --help
-```
-
-The main `runall` command in this tutorial uses only parameters declared by the current command definition:
-
-```text
---fastq --outdir --mode --index --threads --batch_size --project
 ```
