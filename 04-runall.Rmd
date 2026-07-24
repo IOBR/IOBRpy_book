@@ -23,10 +23,9 @@ Do not rerun these components in separate chapters. STAR `runall` already perfor
 2. STAR alignment and gene counting;
 3. merged counts, count-to-TPM conversion, and the standard log-transformed matrix;
 4. signature scoring;
-5. CIBERSORT, IPS, ESTIMATE, MCPcounter, quanTIseq, and EPIC;
-6. merged TME results;
-7. ligand-receptor scoring;
-8. TRUST4 TCR/BCR analysis.
+5. six-method TME panel: run CIBERSORT, IPS, ESTIMATE, MCPcounter, quanTIseq, and EPIC, then merge their outputs;
+6. ligand-receptor scoring;
+7. TRUST4 TCR/BCR analysis.
 
 ## Output contract
 
@@ -53,10 +52,8 @@ results/PRJNA482620/
 └── 07-TCRBCR/
 ```
 
-The additional analyses chapter reuses three outputs:
+The standalone analyses chapter reuses three outputs:
 
 - `03-tpm/tpm_matrix.csv` for the BayesPrism teaching run;
 - `05-tme/cibersort_results.csv` for TME clustering;
 - `02-star/*_Aligned.sortedByCoord.out.bam` for HLA typing.
-
-If the workflow stops, keep the existing result directory, correct the failed stage, and rerun with the resume-friendly output structure intact.

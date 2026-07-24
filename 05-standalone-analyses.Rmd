@@ -1,4 +1,4 @@
-# Additional analyses
+# Standalone analyses
 
 ## BayesPrism
 
@@ -9,7 +9,7 @@ iobrpy bayesprism \
   --threads 4
 ```
 
-Example results:
+The output directory contains:
 
 ```text
 results/PRJNA482620/08-bayesprism/
@@ -28,11 +28,9 @@ iobrpy tme_cluster \
   --output results/PRJNA482620/09-tme-cluster/tme_clusters.csv \
   --features 1:22 \
   --min_nc 2 \
-  --max_nc 3 \
+  --max_nc 5 \
   --print_result
 ```
-
-Example result:
 
 ```text
 ID,cluster,<selected features>
@@ -51,7 +49,7 @@ iobrpy hla_typing \
   -u 1
 ```
 
-Example results:
+The output directory contains:
 
 ```text
 results/PRJNA482620/10-hla/
