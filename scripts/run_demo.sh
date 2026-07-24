@@ -10,7 +10,7 @@ THREADS="${THREADS:-2}"
 BATCH_SIZE="${BATCH_SIZE:-1}"
 PROJECT_NAME="${PROJECT_NAME:-GBM_demo}"
 
-for tool in iobrpy-cli iobrpy fastp STAR run-trust4; do
+for tool in iobrpy fastp STAR run-trust4; do
   command -v "${tool}" >/dev/null 2>&1 || {
     echo "${tool} is not on PATH. Complete the installation chapter first." >&2
     exit 2
@@ -29,20 +29,8 @@ done
 
 mkdir -p "${RESULTS_DIR}" "${LOG_DIR}"
 
-echo "Checking the installed IOBRpy environment..."
-iobrpy-cli doctor --json
-
-echo "Mapping the FASTQ directory before execution..."
-iobrpy-cli map --path "${FASTQ_DIR}" --json
-
-echo "Requesting the CLI-native workflow recommendation..."
-iobrpy-cli recommend \
-  --path "${FASTQ_DIR}" \
-  --task "Run the teaching FASTQ dataset with STAR and the full IOBRpy workflow" \
-  --json
-
 echo "Starting the FASTQ-to-TME workflow..."
-iobrpy-cli runall \
+iobrpy runall \
   --fastq "${FASTQ_DIR}" \
   --outdir "${RESULTS_DIR}" \
   --mode star \

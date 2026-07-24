@@ -14,9 +14,7 @@ description: "A reproducible IOBRpy tutorial using four public glioblastoma RNA-
 knitr::include_graphics('assets/img/IOBRpy.png', dpi = NA)
 ```
 
-This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command uses STAR and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results.
-
-The chapter structure follows the practical style of the [RIMA tutorial](https://liulab-dfci.github.io/RIMA/): prepare the environment and inputs, run the main workflow once, and then run only the analyses that are not included in `runall`. Those standalone chapters cover BayesPrism, TME clustering, and HLA typing.
+This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command uses STAR and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results. Separate chapters cover BayesPrism, TME clustering, and HLA typing.
 
 ## What you will produce
 
@@ -48,7 +46,7 @@ By the end of the tutorial, you will be able to:
 
 ## Teaching dataset
 
-The example uses four pretreatment glioblastoma samples from [PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620). This anti-PD-1 glioblastoma study is also used by the RIMA tutorial. The source study is [Zhao et al., Nature Medicine (2019)](https://doi.org/10.1038/s41591-019-0349-y).
+The example uses four pretreatment glioblastoma samples from [PRJNA482620](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA482620). The source study is [Zhao et al., Nature Medicine (2019)](https://doi.org/10.1038/s41591-019-0349-y).
 
 | Run | Patient | Teaching group | Time point | Library |
 |---|---:|---:|---:|---|
@@ -71,5 +69,5 @@ STAR requires more memory, storage, and run time than Salmon. The FASTQ teaching
 
 - Commands are written for Bash on Linux, macOS, or WSL2.
 - Expression matrices use **genes × samples** orientation.
-- `iobrpy-cli` performs environment checks, path analysis, and parameter validation; installed IOBRpy native commands execute the workflow steps.
+- All analysis commands use the native `iobrpy` interface.
 - Paths are relative to the `IOBRpy_book/` repository root.

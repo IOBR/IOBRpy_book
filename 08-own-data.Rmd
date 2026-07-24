@@ -12,23 +12,10 @@ Your paired-end FASTQ data should meet these requirements:
 - the STAR index was built with the matching FASTA and GTF;
 - the output volume has enough space for BAM files.
 
-## Inspect before running
-
-```bash
-iobrpy-cli map --path /absolute/path/to/fastq --json
-
-iobrpy-cli recommend \
-  --path /absolute/path/to/fastq \
-  --task "Run FASTQ through the STAR workflow and retain BAM files for HLA typing" \
-  --json
-```
-
-If intermediate outputs already exist, decide whether to continue downstream, rerun the current stage, or rerun the full pipeline.
-
 ## Run STAR mode
 
 ```bash
-iobrpy-cli runall \
+iobrpy runall \
   --fastq /absolute/path/to/fastq \
   --outdir /absolute/path/to/results \
   --mode star \
@@ -41,9 +28,9 @@ iobrpy-cli runall \
 Run the standalone commands only when needed:
 
 ```bash
-iobrpy-cli bayesprism --help
-iobrpy-cli tme_cluster --help
-iobrpy-cli hla_typing --help
+iobrpy bayesprism --help
+iobrpy tme_cluster --help
+iobrpy hla_typing --help
 ```
 
 Salmon mode remains available in IOBRpy for lighter expression-focused workflows, but it cannot supply the BAM files required by the HLA chapter.
@@ -53,7 +40,7 @@ Salmon mode remains available in IOBRpy for lighter expression-focused workflows
 If a genes-by-samples TPM matrix already exists:
 
 ```bash
-iobrpy-cli tme_profile \
+iobrpy tme_profile \
   --input TPM_matrix.csv \
   --output tme-results \
   --threads <resource_checked_threads>

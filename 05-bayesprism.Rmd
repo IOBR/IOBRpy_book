@@ -5,7 +5,7 @@ BayesPrism is a standalone IOBRpy command. It is not part of the six-method TME 
 ## Inspect the command
 
 ```bash
-iobrpy-cli bayesprism --help
+iobrpy bayesprism --help
 ```
 
 The input matrix must be genes by samples. Use the non-log matrix from STAR `runall`, not `03-tpm/tpm_matrix.csv`:
@@ -19,7 +19,7 @@ head results/gbm-demo/03-tpm/count2tpm.csv
 Choose the thread count after checking the host:
 
 ```bash
-iobrpy-cli bayesprism \
+iobrpy bayesprism \
   --input results/gbm-demo/03-tpm/count2tpm.csv \
   --output results/gbm-demo/08-bayesprism \
   --threads 2
@@ -45,7 +45,7 @@ The current implementation converts the input values to integers internally. The
 A custom reference requires a cell-by-gene count matrix, one cell-state label per cell, one cell-type label per cell, and a malignant cell-type key:
 
 ```bash
-iobrpy-cli bayesprism \
+iobrpy bayesprism \
   --input bulk_expression.csv \
   --output bayesprism-custom \
   --threads 4 \

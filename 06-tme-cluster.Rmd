@@ -6,7 +6,7 @@
 
 ```bash
 head results/gbm-demo/05-tme/cibersort_results.csv
-iobrpy-cli tme_cluster --help
+iobrpy tme_cluster --help
 ```
 
 The input is a sample-by-feature table. The first column is treated as the sample ID, and `--features 1:22` selects the 22 CIBERSORT cell-fraction columns after that ID column.
@@ -18,7 +18,7 @@ There are only four samples, so restrict the candidate cluster range:
 ```bash
 mkdir -p results/gbm-demo/09-tme-cluster
 
-iobrpy-cli tme_cluster \
+iobrpy tme_cluster \
   --input results/gbm-demo/05-tme/cibersort_results.csv \
   --output results/gbm-demo/09-tme-cluster/tme_clusters.csv \
   --features 1:22 \

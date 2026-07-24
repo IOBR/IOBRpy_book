@@ -1,28 +1,5 @@
 # Run the STAR workflow
 
-## Inspect the input
-
-```bash
-iobrpy-cli map --path data/fastq --json
-```
-
-The scan should identify four paired-end FASTQ samples and no existing workflow outputs. Then request a command recommendation:
-
-```bash
-iobrpy-cli recommend \
-  --path data/fastq \
-  --task "Run the teaching FASTQ dataset with STAR and the full IOBRpy workflow" \
-  --json
-```
-
-Confirm that the recommendation uses:
-
-- `mode = star`;
-- `index = reference/star-gencode-v36`;
-- a resource-checked thread count;
-- `batch_size = 1`;
-- `project = GBM_demo`.
-
 ## Run `runall`
 
 ```bash
@@ -32,7 +9,7 @@ THREADS=2 BATCH_SIZE=1 bash scripts/run_demo.sh
 The script runs the validated native command:
 
 ```bash
-iobrpy-cli runall \
+iobrpy runall \
   --fastq data/fastq \
   --outdir results/gbm-demo \
   --mode star \

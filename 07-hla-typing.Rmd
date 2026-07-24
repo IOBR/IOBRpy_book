@@ -23,13 +23,13 @@ The HLA wrapper scans a flat BAM directory, infers sample IDs from the STAR file
 Inspect the installed interface:
 
 ```bash
-iobrpy-cli hla_typing --help
+iobrpy hla_typing --help
 ```
 
 Then run:
 
 ```bash
-iobrpy-cli hla_typing \
+iobrpy hla_typing \
   -b results/gbm-demo/02-star \
   -r hg38 \
   -o results/gbm-demo/10-hla \
