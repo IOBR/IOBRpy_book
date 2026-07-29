@@ -1,7 +1,5 @@
 # References
 
-Please cite IOBR and the corresponding tools used in your analysis.
-
 ## IOBR
 
 **IOBR:** Zeng D, Ye Z, Shen R, et al. (2021). IOBR: Multi-Omics Immuno-Oncology Biological Research to Decode Tumor Microenvironment and Signatures. *Frontiers in Immunology*, 12, 687975. https://doi.org/10.3389/fimmu.2021.687975
