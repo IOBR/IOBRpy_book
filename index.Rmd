@@ -11,7 +11,7 @@ description: "A reproducible IOBRpy tutorial using six public colorectal cancer 
 # Introduction {#intro}
 
 ```{r fig.align='center', echo=FALSE, out.width='100%', fig.cap='IOBRpy workflow'}
-knitr::include_graphics('assets/img/IOBRpy.png', dpi = NA)
+knitr::include_graphics('assets/img/IOBRpy_workflow_overview.png', dpi = NA)
 ```
 
 This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command runs in STAR mode and produces quality-control files, alignments, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results. A separate chapter covers BayesPrism, TME clustering, and HLA typing.

@@ -12,3 +12,4 @@ rmd_files:
   - 03-star-index.Rmd
   - 04-runall.Rmd
   - 05-standalone-analyses.Rmd
+  - 06-references.Rmd
