@@ -2,7 +2,9 @@
 
 ## Download the FASTQ files
 
-Download the complete paired-end FASTQ files from ENA:
+The worked example uses ten paired-end RNA-seq samples from PRJNA1161405: Normal1-Normal5 and HCC1-HCC5.
+
+Download the FASTQ files from ENA:
 
 ```bash
 mkdir -p data/fastq
@@ -25,18 +27,26 @@ The output directory contains:
 
 ```text
 data/fastq/
-├── DRR503996_1.fastq.gz
-├── DRR503996_2.fastq.gz
-├── DRR503997_1.fastq.gz
-├── DRR503997_2.fastq.gz
-├── DRR503998_1.fastq.gz
-├── DRR503998_2.fastq.gz
-├── DRR503999_1.fastq.gz
-├── DRR503999_2.fastq.gz
-├── DRR504000_1.fastq.gz
-├── DRR504000_2.fastq.gz
-├── DRR504001_1.fastq.gz
-└── DRR504001_2.fastq.gz
+├── SRR35344560_Normal1_1.fastq.gz
+├── SRR35344560_Normal1_2.fastq.gz
+├── SRR35344561_Normal2_1.fastq.gz
+├── SRR35344561_Normal2_2.fastq.gz
+├── SRR35344562_Normal3_1.fastq.gz
+├── SRR35344562_Normal3_2.fastq.gz
+├── SRR35344563_Normal4_1.fastq.gz
+├── SRR35344563_Normal4_2.fastq.gz
+├── SRR35344564_Normal5_1.fastq.gz
+├── SRR35344564_Normal5_2.fastq.gz
+├── SRR35344566_HCC1_1.fastq.gz
+├── SRR35344566_HCC1_2.fastq.gz
+├── SRR35344567_HCC2_1.fastq.gz
+├── SRR35344567_HCC2_2.fastq.gz
+├── SRR35344568_HCC3_1.fastq.gz
+├── SRR35344568_HCC3_2.fastq.gz
+├── SRR35344569_HCC4_1.fastq.gz
+├── SRR35344569_HCC4_2.fastq.gz
+├── SRR35344570_HCC5_1.fastq.gz
+└── SRR35344570_HCC5_2.fastq.gz
 ```
 
 ## Check the FASTQ files
@@ -47,4 +57,4 @@ gzip -t data/fastq/*.fastq.gz
 echo "All twelve FASTQ files passed the gzip integrity check."
 ```
 
-Data source: [ENA study PRJDB16684](https://www.ebi.ac.uk/ena/browser/view/PRJDB16684).
+Data source: [NCBI BioProject PRJNA1161405](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1161405).

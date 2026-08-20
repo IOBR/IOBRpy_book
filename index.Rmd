@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-description: "A reproducible IOBRpy tutorial using six public colorectal cancer spheroid RNA-seq samples, a STAR mode runall workflow, and standalone BayesPrism, TME clustering, and HLA typing analyses."
+description: "A reproducible IOBRpy tutorial using ten public human liver RNA-seq samples, a STAR mode runall workflow, and standalone BayesPrism, TME clustering, and HLA typing analyses."
 ---
 
 # Introduction {#intro}
@@ -21,7 +21,7 @@ This tutorial presents a reproducible IOBRpy workflow that starts with public pa
 The complete workflow creates:
 
 ```text
-results/PRJDB16684/
+results/PRJNA1161405/
 ├── 01-qc/
 ├── 02-star/
 ├── 03-tpm/
@@ -49,4 +49,4 @@ results/PRJDB16684/
 
 ## Example RNA-seq project
 
-The example dataset comes from [ENA study PRJDB16684](https://www.ebi.ac.uk/ena/browser/view/PRJDB16684).
+The example dataset comes from [NCBI BioProject PRJNA1161405](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1161405).

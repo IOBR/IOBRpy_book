@@ -52,4 +52,4 @@
 
 ## Example dataset
 
-**PRJDB16684:** Lin YK, Coppo R, Onuma K, et al. (2024). Growth pattern of de novo small clusters of colorectal cancer is regulated by Notch signaling at detachment. *Cancer Science*, 115(11), 3648-3659. https://doi.org/10.1111/cas.16299
+**PRJNA1161405:** Chan LK, Shan J, Rodriguez-Fos E, et al. (2025). Extrachromosomal circular DNA promotes inflammation and hepatocellular carcinoma development. *Science Advances*, 11(42), eadw0272. https://doi.org/10.1126/sciadv.adw0272
