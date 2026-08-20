@@ -4,10 +4,10 @@
 
 ```bash
 iobrpy runall \
-  --fastq data/fastq \
-  --outdir results/PRJNA1161405-salmon \
+  --fastq "$IOBRPY_DEMO/input/fastq" \
+  --outdir "$IOBRPY_DEMO/results_salmon" \
   --mode salmon \
-  --index /path/to/index/dir/salmon/gencode44 \
+  --index "$IOBRPY_REF/salmon/gencode44" \
   --threads 8 \
   --batch_size 1 \
   --project PRJNA1161405
@@ -17,10 +17,10 @@ iobrpy runall \
 
 ```bash
 iobrpy runall \
-  --fastq data/fastq \
-  --outdir results/PRJNA1161405-star \
+  --fastq "$IOBRPY_DEMO/input/fastq" \
+  --outdir "$IOBRPY_DEMO/results_star" \
   --mode star \
-  --index /path/to/index/dir/star \
+  --index "$IOBRPY_REF/star" \
   --threads 8 \
   --batch_size 1 \
   --project PRJNA1161405
@@ -41,7 +41,7 @@ Do not rerun these components in separate chapters. Both `runall` modes already 
 ## Salmon mode output contract
 
 ```text
-results/PRJNA1161405-salmon/
+$IOBRPY_DEMO/results_salmon/
 ├── 01-qc/
 ├── 02-salmon/
 │   ├── <sample>/quant.sf
@@ -69,7 +69,7 @@ results/PRJNA1161405-salmon/
 ## STAR mode output contract
 
 ```text
-results/PRJNA1161405-star/
+$IOBRPY_DEMO/results_star/
 ├── 01-qc/
 ├── 02-star/
 │   ├── <sample>_Aligned.sortedByCoord.out.bam

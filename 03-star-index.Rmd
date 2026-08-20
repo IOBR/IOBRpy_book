@@ -8,18 +8,18 @@ Activate the IOBRpy environment:
 conda activate iobrpy
 ```
 
-Choose a base directory for the index:
+Use the project reference directory:
 
 ```bash
-export BASE=/path/to/index/dir
-mkdir -p "$BASE"
+export IOBRPY_REF="$IOBRPY_DEMO/reference"
+mkdir -p "$IOBRPY_REF"
 ```
 
 ## Build Salmon index
 
 ```bash
 # Move to the base directory for references
-cd "$BASE"
+cd "$IOBRPY_REF"
 
 # Download the GENCODE v44 transcript FASTA
 wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.transcripts.fa.gz
@@ -28,15 +28,15 @@ wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gen
 gunzip -f gencode.v44.transcripts.fa.gz
 
 # Path
-transcript_fa="$BASE/gencode.v44.transcripts.fa"
+transcript_fa="$IOBRPY_REF/gencode.v44.transcripts.fa"
 
 # Create the parent directory for the Salmon index
-mkdir -p "$BASE/salmon"
+mkdir -p "$IOBRPY_REF/salmon"
 
 # Build the Salmon transcriptome index
 salmon index \
   -t "$transcript_fa" \
-  -i "$BASE/salmon/gencode44" \
+  -i "$IOBRPY_REF/salmon/gencode44" \
   -k 31 \
   -p 8
 ```
@@ -45,7 +45,7 @@ salmon index \
 
 ```bash
 # Move to the base directory for references
-cd "$BASE"
+cd "$IOBRPY_REF"
 
 # Download the primary assembly and GTF (GENCODE v44)
 wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/GRCh38.primary_assembly.genome.fa.gz
@@ -56,9 +56,9 @@ gunzip -f GRCh38.primary_assembly.genome.fa.gz
 gunzip -f gencode.v44.annotation.gtf.gz
 
 # Paths
-STAR_INDEX="$BASE/star"
-genome_fa="$BASE/GRCh38.primary_assembly.genome.fa"
-gtf="$BASE/gencode.v44.annotation.gtf"
+STAR_INDEX="$IOBRPY_REF/star"
+genome_fa="$IOBRPY_REF/GRCh38.primary_assembly.genome.fa"
+gtf="$IOBRPY_REF/gencode.v44.annotation.gtf"
 
 # Create output directory for STAR index
 mkdir -p "$STAR_INDEX"
@@ -76,5 +76,5 @@ STAR --runMode genomeGenerate \
 
 - **Release/assembly:** This guide uses **GENCODE v44** (GRCh38).
 - **Threads:** The Salmon index uses 8 threads, and the STAR index uses 16 threads.
-- **Index type:** Salmon uses the transcriptome index at `$BASE/salmon/gencode44`; STAR uses the genome index at `$BASE/star`.
+- **Index type:** Salmon uses the transcriptome index at `$IOBRPY_REF/salmon/gencode44`; STAR uses the genome index at `$IOBRPY_REF/star`.
 - **Storage:** STAR indexes are large (tens of GB), whereas Salmon indexes require substantially less space.

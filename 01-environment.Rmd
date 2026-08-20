@@ -13,3 +13,17 @@ conda install -y -c conda-forge -c bioconda iobrpy
 ```bash
 iobrpy --help
 ```
+
+## Create the project directory
+
+Use the same project root throughout the tutorial:
+
+```bash
+export IOBRPY_DEMO=/analysis/IOBRpy_PRJNA1161405_demo
+
+mkdir -p \
+  "$IOBRPY_DEMO/input/fastq" \
+  "$IOBRPY_DEMO/reference" \
+  "$IOBRPY_DEMO/results_salmon" \
+  "$IOBRPY_DEMO/results_star"
+```
