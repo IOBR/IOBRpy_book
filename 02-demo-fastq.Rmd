@@ -9,18 +9,26 @@ Download the FASTQ files from ENA:
 ```bash
 mkdir -p data/fastq
 
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503996/DRR503996_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503996/DRR503996_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503997/DRR503997_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503997/DRR503997_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503998/DRR503998_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503998/DRR503998_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503999/DRR503999_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR503/DRR503999/DRR503999_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504000/DRR504000_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504000/DRR504000_2.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504001/DRR504001_1.fastq.gz -P data/fastq
-wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/DRR504/DRR504001/DRR504001_2.fastq.gz -P data/fastq
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/060/SRR35344560/SRR35344560_1.fastq.gz -O data/fastq/SRR35344560_Normal1_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/060/SRR35344560/SRR35344560_2.fastq.gz -O data/fastq/SRR35344560_Normal1_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/061/SRR35344561/SRR35344561_1.fastq.gz -O data/fastq/SRR35344561_Normal2_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/061/SRR35344561/SRR35344561_2.fastq.gz -O data/fastq/SRR35344561_Normal2_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/062/SRR35344562/SRR35344562_1.fastq.gz -O data/fastq/SRR35344562_Normal3_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/062/SRR35344562/SRR35344562_2.fastq.gz -O data/fastq/SRR35344562_Normal3_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/063/SRR35344563/SRR35344563_1.fastq.gz -O data/fastq/SRR35344563_Normal4_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/063/SRR35344563/SRR35344563_2.fastq.gz -O data/fastq/SRR35344563_Normal4_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/064/SRR35344564/SRR35344564_1.fastq.gz -O data/fastq/SRR35344564_Normal5_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/064/SRR35344564/SRR35344564_2.fastq.gz -O data/fastq/SRR35344564_Normal5_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/066/SRR35344566/SRR35344566_1.fastq.gz -O data/fastq/SRR35344566_HCC1_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/066/SRR35344566/SRR35344566_2.fastq.gz -O data/fastq/SRR35344566_HCC1_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/067/SRR35344567/SRR35344567_1.fastq.gz -O data/fastq/SRR35344567_HCC2_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/067/SRR35344567/SRR35344567_2.fastq.gz -O data/fastq/SRR35344567_HCC2_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/068/SRR35344568/SRR35344568_1.fastq.gz -O data/fastq/SRR35344568_HCC3_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/068/SRR35344568/SRR35344568_2.fastq.gz -O data/fastq/SRR35344568_HCC3_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/069/SRR35344569/SRR35344569_1.fastq.gz -O data/fastq/SRR35344569_HCC4_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/069/SRR35344569/SRR35344569_2.fastq.gz -O data/fastq/SRR35344569_HCC4_2.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/070/SRR35344570/SRR35344570_1.fastq.gz -O data/fastq/SRR35344570_HCC5_1.fastq.gz
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR353/070/SRR35344570/SRR35344570_2.fastq.gz -O data/fastq/SRR35344570_HCC5_2.fastq.gz
 ```
 
 The output directory contains:
@@ -52,9 +60,9 @@ data/fastq/
 ## Check the FASTQ files
 
 ```bash
-test "$(find data/fastq -maxdepth 1 -name '*.fastq.gz' | wc -l)" -eq 12
+test "$(find data/fastq -maxdepth 1 -name '*.fastq.gz' | wc -l)" -eq 20
 gzip -t data/fastq/*.fastq.gz
-echo "All twelve FASTQ files passed the gzip integrity check."
+echo "All twenty FASTQ files passed the gzip integrity check."
 ```
 
 Data source: [NCBI BioProject PRJNA1161405](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1161405).

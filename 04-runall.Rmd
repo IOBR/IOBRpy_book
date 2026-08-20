@@ -5,12 +5,12 @@
 ```bash
 iobrpy runall \
   --fastq data/fastq \
-  --outdir results/PRJDB16684-salmon \
+  --outdir results/PRJNA1161405-salmon \
   --mode salmon \
   --index /path/to/index/dir/salmon/gencode44 \
-  --threads 4 \
+  --threads 8 \
   --batch_size 1 \
-  --project PRJDB16684
+  --project PRJNA1161405
 ```
 
 ## Run STAR mode `runall`
@@ -18,12 +18,12 @@ iobrpy runall \
 ```bash
 iobrpy runall \
   --fastq data/fastq \
-  --outdir results/PRJDB16684 \
+  --outdir results/PRJNA1161405-star \
   --mode star \
   --index /path/to/index/dir/star \
-  --threads 4 \
+  --threads 8 \
   --batch_size 1 \
-  --project PRJDB16684
+  --project PRJNA1161405
 ```
 
 ## What is already included
@@ -41,12 +41,12 @@ Do not rerun these components in separate chapters. Both `runall` modes already 
 ## Salmon mode output contract
 
 ```text
-results/PRJDB16684-salmon/
+results/PRJNA1161405-salmon/
 ├── 01-qc/
 ├── 02-salmon/
 │   ├── <sample>/quant.sf
-│   ├── PRJDB16684_salmon_count.tsv.gz
-│   └── PRJDB16684_salmon_tpm.tsv.gz
+│   ├── PRJNA1161405_salmon_count.tsv.gz
+│   └── PRJNA1161405_salmon_tpm.tsv.gz
 ├── 03-tpm/
 │   ├── prepare_salmon.csv
 │   └── tpm_matrix.csv
@@ -69,12 +69,12 @@ results/PRJDB16684-salmon/
 ## STAR mode output contract
 
 ```text
-results/PRJDB16684/
+results/PRJNA1161405-star/
 ├── 01-qc/
 ├── 02-star/
 │   ├── <sample>_Aligned.sortedByCoord.out.bam
 │   ├── <sample>_ReadsPerGene.out.tab
-│   └── PRJDB16684.STAR.count.tsv.gz
+│   └── PRJNA1161405.STAR.count.tsv.gz
 ├── 03-tpm/
 │   ├── count2tpm.csv
 │   └── tpm_matrix.csv

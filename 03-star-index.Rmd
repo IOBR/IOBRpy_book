@@ -38,7 +38,7 @@ salmon index \
   -t "$transcript_fa" \
   -i "$BASE/salmon/gencode44" \
   -k 31 \
-  -p 4
+  -p 8
 ```
 
 ## Build STAR index
@@ -68,13 +68,13 @@ STAR --runMode genomeGenerate \
      --genomeDir "$STAR_INDEX" \
      --genomeFastaFiles "$genome_fa" \
      --sjdbGTFfile "$gtf" \
-     --runThreadN 4 \
+     --runThreadN 16 \
      --sjdbOverhang 100
 ```
 
 ## Notes
 
 - **Release/assembly:** This guide uses **GENCODE v44** (GRCh38).
-- **Threads:** This tutorial uses 4 threads.
+- **Threads:** The Salmon index uses 8 threads, and the STAR index uses 16 threads.
 - **Index type:** Salmon uses the transcriptome index at `$BASE/salmon/gencode44`; STAR uses the genome index at `$BASE/star`.
 - **Storage:** STAR indexes are large (tens of GB), whereas Salmon indexes require substantially less space.

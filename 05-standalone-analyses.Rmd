@@ -6,15 +6,15 @@ BayesPrism performs immune deconvolution of a TPM matrix using a single-cell ref
 
 ```bash
 iobrpy bayesprism \
-  --input results/PRJDB16684/03-tpm/tpm_matrix.csv \
-  --output results/PRJDB16684/08-bayesprism \
+  --input results/PRJNA1161405-star/03-tpm/tpm_matrix.csv \
+  --output results/PRJNA1161405-star/08-bayesprism \
   --threads 4
 ```
 
 The output directory contains:
 
 ```text
-results/PRJDB16684/08-bayesprism/
+results/PRJNA1161405-star/08-bayesprism/
 ├── theta.csv
 ├── theta_cv.csv
 └── Z_tumor.csv
@@ -25,11 +25,11 @@ results/PRJDB16684/08-bayesprism/
 TME clustering groups samples according to their tumor microenvironment profiles.
 
 ```bash
-mkdir -p results/PRJDB16684/09-tme-cluster
+mkdir -p results/PRJNA1161405-star/09-tme-cluster
 
 iobrpy tme_cluster \
-  --input results/PRJDB16684/05-tme/cibersort_results.csv \
-  --output results/PRJDB16684/09-tme-cluster/tme_clusters.csv \
+  --input results/PRJNA1161405-star/05-tme/cibersort_results.csv \
+  --output results/PRJNA1161405-star/09-tme-cluster/tme_clusters.csv \
   --features 1:22 \
   --min_nc 2 \
   --max_nc 5 \
@@ -40,17 +40,17 @@ iobrpy tme_cluster \
 
 ```bash
 iobrpy hla_typing \
-  -b results/PRJDB16684/02-star \
+  -b results/PRJNA1161405-star/02-star \
   -r hg38 \
-  -o results/PRJDB16684/10-hla \
-  -j 4 \
+  -o results/PRJNA1161405-star/10-hla \
+  -j 8 \
   -u 1
 ```
 
 The output directory contains:
 
 ```text
-results/PRJDB16684/10-hla/
+results/PRJNA1161405-star/10-hla/
 ├── ExtractHLAread/<sample>/
 ├── SpecHLA/<sample>/hla.result.txt
 └── hla_result_merged.txt
