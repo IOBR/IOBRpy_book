@@ -6,9 +6,9 @@ BayesPrism performs immune deconvolution of a TPM matrix using a single-cell ref
 
 ```bash
 iobrpy bayesprism \
-  --input "$IOBRPY_DEMO/results_star/03-tpm/tpm_matrix.csv" \
+  --input "$IOBRPY_DEMO/results_star/03-tpm/count2tpm.csv" \
   --output "$IOBRPY_DEMO/results_star/08-bayesprism" \
-  --threads 4
+  --threads 8
 ```
 
 The output directory contains:

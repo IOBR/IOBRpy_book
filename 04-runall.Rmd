@@ -96,6 +96,6 @@ $IOBRPY_DEMO/results_star/
 
 The standalone analyses chapter reuses three outputs:
 
-- `03-tpm/tpm_matrix.csv` for the BayesPrism teaching run;
+- `03-tpm/count2tpm.csv` for BayesPrism;
 - `05-tme/cibersort_results.csv` for TME clustering;
 - `02-star/*_Aligned.sortedByCoord.out.bam` for HLA typing.
