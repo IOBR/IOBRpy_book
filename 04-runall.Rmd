@@ -1,6 +1,19 @@
-# Run the STAR workflow
+# Run the Salmon and STAR workflows
 
-## Run `runall`
+## Run Salmon mode `runall`
+
+```bash
+iobrpy runall \
+  --fastq data/fastq \
+  --outdir results/PRJDB16684-salmon \
+  --mode salmon \
+  --index /path/to/index/dir/salmon/gencode44 \
+  --threads 4 \
+  --batch_size 1 \
+  --project PRJDB16684
+```
+
+## Run STAR mode `runall`
 
 ```bash
 iobrpy runall \
@@ -15,17 +28,45 @@ iobrpy runall \
 
 ## What is already included
 
-Do not rerun these components in separate chapters. STAR mode `runall` already performs:
+Do not rerun these components in separate chapters. Both `runall` modes already perform:
 
 1. fastp quality control;
-2. STAR alignment and gene counting;
-3. merged gene counts, count-to-TPM conversion, and log2 transformation of the TPM matrix;
+2. Salmon quantification or STAR alignment and gene counting;
+3. merged expression output, TPM matrix preparation, and log2 transformation of the TPM matrix;
 4. signature scoring;
 5. six-method TME panel: run CIBERSORT, IPS, ESTIMATE, MCPcounter, quanTIseq, and EPIC, then merge their outputs;
 6. ligand-receptor scoring;
 7. TRUST4 TCR/BCR analysis.
 
-## Output contract
+## Salmon mode output contract
+
+```text
+results/PRJDB16684-salmon/
+├── 01-qc/
+├── 02-salmon/
+│   ├── <sample>/quant.sf
+│   ├── PRJDB16684_salmon_count.tsv.gz
+│   └── PRJDB16684_salmon_tpm.tsv.gz
+├── 03-tpm/
+│   ├── prepare_salmon.csv
+│   └── tpm_matrix.csv
+├── 04-signatures/calculate_sig_score.csv
+├── 05-tme/
+│   ├── cibersort_results.csv
+│   ├── IPS_results.csv
+│   ├── estimate_results.csv
+│   ├── mcpcounter_results.csv
+│   ├── quantiseq_results.csv
+│   ├── epic_results.csv
+│   └── deconvo_merged.csv
+├── 06-LR_cal/lr_cal.csv
+└── 07-TCRBCR/
+    ├── <sample>/<sample>_report.tsv
+    ├── trust4_immdata.csv
+    └── trust4_immune_indices.csv
+```
+
+## STAR mode output contract
 
 ```text
 results/PRJDB16684/

@@ -1,4 +1,4 @@
-# Build the STAR genome index
+# Build the Salmon and STAR indexes
 
 ## Prerequisites
 
@@ -13,6 +13,32 @@ Choose a base directory for the index:
 ```bash
 export BASE=/path/to/index/dir
 mkdir -p "$BASE"
+```
+
+## Build Salmon index
+
+```bash
+# Move to the base directory for references
+cd "$BASE"
+
+# Download the GENCODE v44 transcript FASTA
+wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.transcripts.fa.gz
+
+# Decompress the download
+gunzip -f gencode.v44.transcripts.fa.gz
+
+# Path
+transcript_fa="$BASE/gencode.v44.transcripts.fa"
+
+# Create the parent directory for the Salmon index
+mkdir -p "$BASE/salmon"
+
+# Build the Salmon transcriptome index
+salmon index \
+  -t "$transcript_fa" \
+  -i "$BASE/salmon/gencode44" \
+  -k 31 \
+  -p 4
 ```
 
 ## Build STAR index
@@ -50,4 +76,5 @@ STAR --runMode genomeGenerate \
 
 - **Release/assembly:** This guide uses **GENCODE v44** (GRCh38).
 - **Threads:** This tutorial uses 4 threads.
-- **Storage:** STAR indexes are large (tens of GB). Ensure you have enough disk space.
+- **Index type:** Salmon uses the transcriptome index at `$BASE/salmon/gencode44`; STAR uses the genome index at `$BASE/star`.
+- **Storage:** STAR indexes are large (tens of GB), whereas Salmon indexes require substantially less space.
