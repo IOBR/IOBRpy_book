@@ -48,6 +48,15 @@ iobrpy nmf \
   --features 1:22
 ```
 
+The output directory contains:
+
+```text
+$IOBRPY_DEMO/nmf/
+├── clusters.csv
+├── pca_plot.png
+└── top_features_per_cluster.csv
+```
+
 ## HLA typing
 
 ```bash
