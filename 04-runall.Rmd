@@ -4,12 +4,12 @@
 
 ```bash
 iobrpy runall \
-  --fastq "$IOBRPY_DEMO/input/fastq" \
-  --outdir "$IOBRPY_DEMO/results_salmon" \
   --mode salmon \
-  --index "$IOBRPY_REF/salmon/gencode44" \
+  --outdir "$IOBRPY_DEMO/results_salmon" \
+  --fastq "$IOBRPY_DEMO/input/fastq" \
   --threads 8 \
   --batch_size 1 \
+  --index "$IOBRPY_REF/salmon/gencode44" \
   --project PRJNA1161405
 ```
 
@@ -17,12 +17,12 @@ iobrpy runall \
 
 ```bash
 iobrpy runall \
-  --fastq "$IOBRPY_DEMO/input/fastq" \
-  --outdir "$IOBRPY_DEMO/results_star" \
   --mode star \
-  --index "$IOBRPY_REF/star" \
+  --outdir "$IOBRPY_DEMO/results_star" \
+  --fastq "$IOBRPY_DEMO/input/fastq" \
   --threads 8 \
   --batch_size 1 \
+  --index "$IOBRPY_REF/star" \
   --project PRJNA1161405
 ```
 
@@ -97,5 +97,5 @@ $IOBRPY_DEMO/results_star/
 The standalone analyses chapter reuses three outputs:
 
 - `03-tpm/count2tpm.csv` for BayesPrism;
-- `05-tme/cibersort_results.csv` for TME clustering;
+- `05-tme/cibersort_results.csv` for TME and NMF clustering;
 - `02-star/*_Aligned.sortedByCoord.out.bam` for HLA typing.

@@ -1,0 +1,43 @@
+# Agent-assisted workflow
+
+## Install the agent skills
+
+```bash
+iobrpy-cli agent install --client all
+```
+
+## Verify the installation
+
+```bash
+iobrpy-cli agent status
+```
+
+## Start an agent client
+
+Use either client:
+
+```bash
+claude
+```
+
+```bash
+codex
+```
+
+## Inspect the project
+
+```text
+/iobrpy Please scan /analysis/IOBRpy_PRJNA1161405_demo. Show the full checklist first, then report the current stage and the best next step.
+```
+
+## Run the recommended analysis
+
+```text
+/iobrpy Run the recommended analysis step and save the outputs to /analysis/IOBRpy_PRJNA1161405_demo/<output_directory>.
+```
+
+## Review the results
+
+```text
+/iobrpy-result Please audit and summarise /analysis/IOBRpy_PRJNA1161405_demo/<output_directory>. Perform appropriate statistical analyses and compare the Normal and HCC groups. Generate method-aware visualisations in R and provide a basic interpretation of the results.
+```

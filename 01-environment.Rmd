@@ -3,7 +3,7 @@
 ## Create a Conda environment
 
 ```bash
-conda create -n iobrpy -y
+conda create -n iobrpy python=3.11 -y
 conda activate iobrpy
 conda install -y -c conda-forge -c bioconda iobrpy
 ```
@@ -11,6 +11,7 @@ conda install -y -c conda-forge -c bioconda iobrpy
 ## Verify the installation
 
 ```bash
+iobrpy --version
 iobrpy --help
 ```
 
@@ -25,5 +26,6 @@ mkdir -p \
   "$IOBRPY_DEMO/input/fastq" \
   "$IOBRPY_DEMO/reference" \
   "$IOBRPY_DEMO/results_salmon" \
-  "$IOBRPY_DEMO/results_star"
+  "$IOBRPY_DEMO/results_star" \
+  "$IOBRPY_DEMO/hla_typing"
 ```

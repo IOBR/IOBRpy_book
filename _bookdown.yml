@@ -10,6 +10,7 @@ rmd_files:
   - 01-environment.Rmd
   - 02-demo-fastq.Rmd
   - 03-star-index.Rmd
+  - 04-agent-skills.Rmd
   - 04-runall.Rmd
   - 05-standalone-analyses.Rmd
   - 06-references.Rmd

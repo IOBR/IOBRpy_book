@@ -6,15 +6,15 @@ BayesPrism performs immune deconvolution of a TPM matrix using a single-cell ref
 
 ```bash
 iobrpy bayesprism \
-  --input "$IOBRPY_DEMO/results_star/03-tpm/count2tpm.csv" \
-  --output "$IOBRPY_DEMO/results_star/08-bayesprism" \
+  -i "$IOBRPY_DEMO/results_star/03-tpm/count2tpm.csv" \
+  -o "$IOBRPY_DEMO/bayesprism" \
   --threads 8
 ```
 
 The output directory contains:
 
 ```text
-$IOBRPY_DEMO/results_star/08-bayesprism/
+$IOBRPY_DEMO/bayesprism/
 ├── theta.csv
 ├── theta_cv.csv
 └── Z_tumor.csv
@@ -25,15 +25,27 @@ $IOBRPY_DEMO/results_star/08-bayesprism/
 TME clustering groups samples according to their tumor microenvironment profiles.
 
 ```bash
-mkdir -p "$IOBRPY_DEMO/results_star/09-tme-cluster"
-
 iobrpy tme_cluster \
-  --input "$IOBRPY_DEMO/results_star/05-tme/cibersort_results.csv" \
-  --output "$IOBRPY_DEMO/results_star/09-tme-cluster/tme_clusters.csv" \
+  -i "$IOBRPY_DEMO/results_star/05-tme/cibersort_results.csv" \
+  -o "$IOBRPY_DEMO/tme_cluster.csv" \
   --features 1:22 \
+  --id "ID" \
   --min_nc 2 \
   --max_nc 5 \
-  --print_result
+  --print_result \
+  --scale
+```
+
+## NMF clustering
+
+NMF identifies latent sample groups from a feature matrix.
+
+```bash
+iobrpy nmf \
+  -i "$IOBRPY_DEMO/results_star/05-tme/cibersort_results.csv" \
+  -o "$IOBRPY_DEMO/nmf" \
+  --kmax 3 \
+  --features 1:22
 ```
 
 ## HLA typing
@@ -42,15 +54,14 @@ iobrpy tme_cluster \
 iobrpy hla_typing \
   -b "$IOBRPY_DEMO/results_star/02-star" \
   -r hg38 \
-  -o "$IOBRPY_DEMO/results_star/10-hla" \
-  -j 8 \
-  -u 1
+  -o "$IOBRPY_DEMO/hla_typing" \
+  -j 8
 ```
 
 The output directory contains:
 
 ```text
-$IOBRPY_DEMO/results_star/10-hla/
+$IOBRPY_DEMO/hla_typing/
 ├── ExtractHLAread/<sample>/
 ├── SpecHLA/<sample>/hla.result.txt
 └── hla_result_merged.txt

@@ -2,40 +2,32 @@
 
 ## Prerequisites
 
-Activate the IOBRpy environment:
-
 ```bash
 conda activate iobrpy
-```
-
-Use the project reference directory:
-
-```bash
 export IOBRPY_REF="$IOBRPY_DEMO/reference"
 mkdir -p "$IOBRPY_REF"
+cd "$IOBRPY_REF"
+
+wget -c \
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.transcripts.fa.gz
+wget -c \
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.annotation.gtf.gz
+wget -c \
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/GRCh38.primary_assembly.genome.fa.gz
+
+gunzip -f \
+  gencode.v44.transcripts.fa.gz \
+  gencode.v44.annotation.gtf.gz \
+  GRCh38.primary_assembly.genome.fa.gz
 ```
 
 ## Build Salmon index
 
 ```bash
-# Move to the base directory for references
-cd "$IOBRPY_REF"
-
-# Download the GENCODE v44 transcript FASTA
-wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.transcripts.fa.gz
-
-# Decompress the download
-gunzip -f gencode.v44.transcripts.fa.gz
-
-# Path
-transcript_fa="$IOBRPY_REF/gencode.v44.transcripts.fa"
-
-# Create the parent directory for the Salmon index
 mkdir -p "$IOBRPY_REF/salmon"
 
-# Build the Salmon transcriptome index
 salmon index \
-  -t "$transcript_fa" \
+  -t "$IOBRPY_REF/gencode.v44.transcripts.fa" \
   -i "$IOBRPY_REF/salmon/gencode44" \
   -k 31 \
   -p 8
@@ -44,32 +36,14 @@ salmon index \
 ## Build STAR index
 
 ```bash
-# Move to the base directory for references
-cd "$IOBRPY_REF"
+mkdir -p "$IOBRPY_REF/star"
 
-# Download the primary assembly and GTF (GENCODE v44)
-wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/GRCh38.primary_assembly.genome.fa.gz
-wget -c https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.annotation.gtf.gz
-
-# Decompress the downloads
-gunzip -f GRCh38.primary_assembly.genome.fa.gz
-gunzip -f gencode.v44.annotation.gtf.gz
-
-# Paths
-STAR_INDEX="$IOBRPY_REF/star"
-genome_fa="$IOBRPY_REF/GRCh38.primary_assembly.genome.fa"
-gtf="$IOBRPY_REF/gencode.v44.annotation.gtf"
-
-# Create output directory for STAR index
-mkdir -p "$STAR_INDEX"
-
-# Build STAR genome index
 STAR --runMode genomeGenerate \
-     --genomeDir "$STAR_INDEX" \
-     --genomeFastaFiles "$genome_fa" \
-     --sjdbGTFfile "$gtf" \
-     --runThreadN 16 \
-     --sjdbOverhang 100
+  --genomeDir "$IOBRPY_REF/star" \
+  --genomeFastaFiles "$IOBRPY_REF/GRCh38.primary_assembly.genome.fa" \
+  --sjdbGTFfile "$IOBRPY_REF/gencode.v44.annotation.gtf" \
+  --runThreadN 16 \
+  --sjdbOverhang 100
 ```
 
 ## Notes

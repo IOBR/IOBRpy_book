@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-description: "A reproducible IOBRpy tutorial using ten public human liver RNA-seq samples, Salmon and STAR mode runall workflows, and standalone BayesPrism, TME clustering, and HLA typing analyses."
+description: "A reproducible IOBRpy tutorial using ten public human liver RNA-seq samples, paired agent skills, Salmon and STAR mode runall workflows, and standalone BayesPrism, TME clustering, NMF, and HLA typing analyses."
 ---
 
 # Introduction {#intro}
@@ -14,7 +14,7 @@ description: "A reproducible IOBRpy tutorial using ten public human liver RNA-se
 knitr::include_graphics('assets/img/IOBRpy_workflow_overview.png', dpi = NA)
 ```
 
-This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. The main `runall` command runs in Salmon or STAR mode and produces quality-control files, a TPM matrix, signature scores, six default TME analyses, ligand-receptor scores, and TRUST4 results. STAR mode also produces alignments for HLA typing. A separate chapter covers BayesPrism, TME clustering, and HLA typing.
+This tutorial presents a reproducible IOBRpy workflow that starts with public paired-end FASTQ files. It includes paired agent skills, Salmon and STAR mode `runall`, BayesPrism, TME clustering, NMF, and HLA typing.
 
 ## Output directories
 
@@ -35,17 +35,18 @@ All chapters use `/analysis/IOBRpy_PRJNA1161405_demo` as the project root. The c
 │   ├── 05-tme/
 │   ├── 06-LR_cal/
 │   └── 07-TCRBCR/
-└── results_star/
-    ├── 01-qc/
-    ├── 02-star/
-    ├── 03-tpm/
-    ├── 04-signatures/
-    ├── 05-tme/
-    ├── 06-LR_cal/
-    ├── 07-TCRBCR/
-    ├── 08-bayesprism/
-    ├── 09-tme-cluster/
-    └── 10-hla/
+├── results_star/
+│   ├── 01-qc/
+│   ├── 02-star/
+│   ├── 03-tpm/
+│   ├── 04-signatures/
+│   ├── 05-tme/
+│   ├── 06-LR_cal/
+│   └── 07-TCRBCR/
+├── bayesprism/
+├── hla_typing/
+├── nmf/
+└── tme_cluster.csv
 ```
 
 | Directory | Contents |
@@ -60,9 +61,10 @@ All chapters use `/analysis/IOBRpy_PRJNA1161405_demo` as the project root. The c
 | `05-tme/` | Results from the six-method TME panel and their merged profile. |
 | `06-LR_cal/` | Ligand-receptor activity scores calculated from the expression matrix. |
 | `07-TCRBCR/` | TRUST4 T-cell and B-cell receptor repertoire outputs. |
-| `08-bayesprism/` | BayesPrism immune deconvolution results. |
-| `09-tme-cluster/` | Sample clusters derived from TME profiles. |
-| `10-hla/` | Per-sample HLA typing results and the merged HLA table. |
+| `bayesprism/` | BayesPrism immune deconvolution results. |
+| `tme_cluster.csv` | Sample clusters derived from TME profiles. |
+| `nmf/` | NMF clustering results. |
+| `hla_typing/` | Per-sample HLA typing results and the merged HLA table. |
 
 ## Example RNA-seq project
 
