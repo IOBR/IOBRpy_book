@@ -38,13 +38,13 @@ iobrpy tme_cluster \
 
 ## NMF clustering
 
-NMF identifies latent sample groups from a feature matrix.
+NMF clustering identifies latent sample groups from a feature matrix.
 
 ```bash
 iobrpy nmf \
   -i "$IOBRPY_DEMO/results_star/05-tme/cibersort_results.csv" \
   -o "$IOBRPY_DEMO/nmf" \
-  --kmax 3 \
+  --kmax 5 \
   --features 1:22
 ```
 

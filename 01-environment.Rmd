@@ -1,6 +1,6 @@
 # Installation and environment checks
 
-## Create a Conda environment
+## Create a Conda environment and install IOBRpy
 
 ```bash
 conda create -n iobrpy python=3.11 -y

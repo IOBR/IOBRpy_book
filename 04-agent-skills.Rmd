@@ -12,9 +12,7 @@ iobrpy-cli agent install --client all
 iobrpy-cli agent status
 ```
 
-## Start an agent client
-
-Use either client:
+## Start Claude Code or Codex
 
 ```bash
 claude
